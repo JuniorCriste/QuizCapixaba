@@ -1,10 +1,8 @@
 #### Quiz Capixaba
- Jogo de perguntas e respostas desenvolvido para demonstração em Dia D da Tecnologia da rede estadual de escolas do Espírito Santo. \
- O jogo consiste em 30 questões sobre o Estado e sua cultura! Jogue com seus amigos, alunos e colegas de trabalho. \
+ Jogo de perguntas e respostas desenvolvido para demonstração em Dia D da Tecnologia da rede estadual de escolas do Espírito Santo. O jogo consiste em 30 questões sobre o Estado e sua cultura! Jogue com seus amigos, alunos e colegas de trabalho. \
  Instruções: \
- Vídeo 
+ ##### Vídeo 
 ##### Versão 1
-![Alunos jogando o Quiz Capixaba](img/quizcapixaba.png?raw=true)
 | Link  | Sobre |
 | ------------------- | ------------------- |
 |  [Acessar Jogo](https://juniorcriste.github.io/QuizCapixaba/) |  Jogo de Perguntas e Respostas sobre o Espírito Santo| 
@@ -12,3 +10,6 @@
 |  [Mais Projetos](https://github.com/JuniorCriste?tab=repositories) | Repositórios diversos e diversas linguagens | 
 |  [Siteblog e Social](https://informaticode.com.br) | Site e Redes sociais do Dev | 
 
+
+![Alunos jogando o Quiz Capixaba](img/quizcapixaba.png?raw=true)
+Alunos jogando o Quiz Capixaba no Dia D da Tecnologia na EEEFM José Teixeira Fialho
