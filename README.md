@@ -1,5 +1,5 @@
 #### Quiz Capixaba
-### Jogo de perguntas e respostas desenvolvido para demonstração em Dia D da Tecnologia. 30 questões sobre o ES e sua cultura!
+ Jogo de perguntas e respostas desenvolvido para demonstração em Dia D da Tecnologia. 30 questões sobre o ES e sua cultura!
 ##### Versão 1
 
 | Link  | Sobre |
