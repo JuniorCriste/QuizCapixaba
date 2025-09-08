@@ -4,4 +4,4 @@ Versão 1
 | Link  | Sobre |
 | ------------------- | ------------------- |
 |  [Acessar Jogo](https://juniorcriste.github.io/QuizCapixaba/) |  Jogo de Perguntas e Respostas sobre o Espírito Santo| 
-|  [Outras Coisas](informaticode.com.br) Site e Redes sociais do Dev | 
+|  [Outras Coisas](https://informaticode.com.br) | Site e Redes sociais do Dev | 
