@@ -174,7 +174,14 @@ let score = 0;
 let topScores = JSON.parse(localStorage.getItem('topScores')) || [];
 const topRankingSize = 5;
 
+// Configuração e Início do Áudio de Início em Loop
 const audioInicio = new Audio('audio/inicio.ogg');
+audioInicio.loop = true;
+// Tenta tocar o áudio. Isso pode falhar em alguns navegadores devido a políticas de autoplay
+// Sem uma interação do usuário. Adicionaremos um listener para garantir.
+document.addEventListener('DOMContentLoaded', () => {
+    audioInicio.play().catch(e => console.log("Autoplay bloqueado, o áudio iniciará com o primeiro clique."));
+});
 const audioAcerto = new Audio('audio/acerto.ogg');
 const audioErro = new Audio('audio/erro.ogg');
 const audioVitoria = new Audio('audio/campeao.ogg');
@@ -194,6 +201,10 @@ function shuffleArray(array) {
 }
 
 function startGame() {
+    // Para o áudio de início em loop
+    audioInicio.pause();
+    audioInicio.currentTime = 0;
+
     startScreen.classList.add('hidden');
     endGameScreen.classList.add('hidden');
     gameScreen.classList.remove('hidden');
@@ -202,7 +213,6 @@ function startGame() {
     currentQuestionIndex = 0;
     score = 0;
     currentScoreElement.textContent = score;
-    audioInicio.play();
     displayQuestion();
 }
 
@@ -218,9 +228,11 @@ function displayQuestion() {
     const options = currentQuestion.options;
     options.forEach((option, index) => {
         const button = optionButtons[index];
-        button.innerHTML = `<span>${Object.keys(keyboardMap).find(key => keyboardMap[key] === button.id.slice(-1))}</span>${option}`;
+        // Encontra o atalho de teclado correto para o ID do botão
+        const shortcutKey = Object.keys(keyboardMap).find(key => keyboardMap[key] === button.id.slice(-1));
+        button.innerHTML = `<span>${shortcutKey}</span>${option}`;
         button.dataset.answer = option;
-        // Adiciona o event listener para clique
+        // Reativa o event listener para clique nos botões
         button.onclick = () => checkAnswer(button.dataset.answer);
     });
 }
@@ -244,6 +256,12 @@ async function endGame(lost = false) {
     endGameScreen.classList.remove('hidden');
     finalScoreElement.textContent = score;
     restartButton.classList.add('hidden');
+
+    // Se o jogo recomeçar pela tela final, o áudio de início deve tocar novamente
+    restartButton.onclick = () => {
+        audioInicio.play().catch(e => console.log("Início de áudio falhou no restart."));
+        startGame();
+    };
 
     if (lost) {
         endGameMessageElement.textContent = `Você errou e perdeu! Sua pontuação foi ${score}.`;
@@ -329,13 +347,17 @@ function showRanking() {
             clearInterval(interval);
             endGameScreen.classList.add('hidden');
             startScreen.classList.remove('hidden');
+            // Retorna para a tela inicial: Toca o áudio de início em loop
+            audioInicio.play().catch(e => console.log("Início de áudio falhou no retorno."));
         }
     }, 1000);
 }
 
 // Event Listeners
 startButton.addEventListener('click', startGame);
-restartButton.addEventListener('click', startGame);
+// O restartButton.addEventListener('click', startGame) original foi substituído
+// pelo 'onclick' dentro de endGame para garantir que o áudio de início toque
+// no retorno à tela inicial.
 
 document.addEventListener('keydown', (e) => {
     if (gameScreen.classList.contains('hidden')) {
@@ -354,6 +376,8 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (event) => {
     if (!startScreen.classList.contains('hidden') && (event.key === '5' || event.key === ' ' || event.key === 'Enter')) {
+        // Tenta garantir que o áudio de início comece se não tiver começado por política de autoplay
+        audioInicio.play().catch(e => console.log("Início de áudio falhou no teclado."));
         startButton.click();
     }
 });
