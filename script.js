@@ -111,7 +111,7 @@ const quizData = [
     },
     {
         question: "Qual o instrumento que é um dos símbolos do Espírito Santo, comumente utilizado no congo capixaba?",
-        options: ["Guitarra", "Violão", "Casaca", "Sintetizadores"],
+        options: ["Guitarra", "Violão", "Sintetizadores", "Casaca"],
         answer: "Casaca"
     },
     {
@@ -146,7 +146,7 @@ const quizData = [
     },
     {
         question: "Colatina é conhecida como:",
-        options: ["Cidade Saúde", "Cidade das Dunas", "Princesa do Norte", "Capital da Polenta"],
+        options: ["Cidade Saúde", "Cidade das Dunas", "Capital da Polenta", "Princesa do Norte"],
         answer: "Princesa do Norte"
     }
 ];
