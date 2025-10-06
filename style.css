@@ -5,7 +5,6 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    /* REMOVIDO: background-color: #f0f0f0; */
 }
 
 /* NOVO: Estilo para a imagem de fundo */
@@ -19,6 +18,14 @@ body {
     background-position: center; /* Centraliza a imagem */
     z-index: -1; /* Coloca a imagem atrás de todo o conteúdo */
     opacity: 0.8; /* Adiciona uma leve transparência para melhorar a leitura */
+    /* NOVO: Transição suave para o efeito de blur */
+    transition: filter 1.0s ease-in-out;
+    filter: blur(0); /* Estado inicial sem blur */
+}
+
+/* NOVO: Classe para o estado de desfoque durante o jogo */
+#background-image.blurred {
+    filter: blur(15px); /* Aplica um desfoque significativo (15 pixels) */
 }
 
 .screen {
@@ -47,7 +54,7 @@ body {
 .hidden {
     display: none;
 }
-/* ... (restante do CSS inalterado) ... */
+
 #options-container {
     display: flex;
     flex-direction: column;

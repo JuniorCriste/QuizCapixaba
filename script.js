@@ -167,7 +167,6 @@ const webcamElement = document.getElementById('webcam');
 const canvasElement = document.getElementById('canvas');
 const countdownElement = document.getElementById('countdown');
 const currentScoreElement = document.getElementById('current-score');
-// NOVO: Elemento de fundo
 const backgroundElement = document.getElementById('background-image');
 
 let shuffledQuestions = [];
@@ -176,7 +175,6 @@ let score = 0;
 let topScores = JSON.parse(localStorage.getItem('topScores')) || [];
 const topRankingSize = 5;
 
-// NOVO: Lista das suas imagens de fundo
 // ATENÇÃO: SUBSTITUA ESTA LISTA COM OS NOMES REAIS DOS SEUS ARQUIVOS JPG!
 const bgImages = [
     'background1.jpg',
@@ -255,7 +253,6 @@ function shuffleArray(array) {
     }
 }
 
-// NOVO: Função para selecionar e aplicar a imagem de fundo aleatória
 function setRandomBackground() {
     if (bgImages.length === 0) return;
     const randomIndex = Math.floor(Math.random() * bgImages.length);
@@ -272,6 +269,9 @@ setRandomBackground();
 function startGame() {
     // Tenta iniciar a música de fundo do jogo
     audioFundo.play().catch(e => console.log("Música de fundo bloqueada. O jogo continuará sem som de fundo."));
+    
+    // NOVO: Aplica o desfoque ao iniciar o jogo
+    backgroundElement.classList.add('blurred');
     
     startScreen.classList.add('hidden');
     endGameScreen.classList.add('hidden');
@@ -411,7 +411,11 @@ function showRanking() {
             clearInterval(interval);
             endGameScreen.classList.add('hidden');
             startScreen.classList.remove('hidden');
-            // NOVO: Aplica um novo fundo aleatório ao retornar para a tela inicial
+            
+            // NOVO: Remove o desfoque ao retornar para a tela inicial
+            backgroundElement.classList.remove('blurred'); 
+            
+            // Aplica um novo fundo aleatório ao retornar para a tela inicial
             setRandomBackground();
         }
     }, 1000);
