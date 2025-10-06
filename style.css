@@ -18,14 +18,16 @@ body {
     background-position: center; /* Centraliza a imagem */
     z-index: -1; /* Coloca a imagem atrás de todo o conteúdo */
     opacity: 0.8; /* Adiciona uma leve transparência para melhorar a leitura */
-    /* NOVO: Transição suave para o efeito de blur */
-    transition: filter 1.0s ease-in-out;
+    /* ATUALIZADO: Transição suave para os efeitos de blur e zoom */
+    transition: filter 1.0s ease-in-out, transform 1.0s ease-in-out;
     filter: blur(0); /* Estado inicial sem blur */
+    transform: scale(1.0); /* Estado inicial sem zoom (100%) */
 }
 
-/* NOVO: Classe para o estado de desfoque durante o jogo */
+/* NOVO: Classe para o estado de desfoque e zoom durante o jogo */
 #background-image.blurred {
-    filter: blur(15px); /* Aplica um desfoque significativo (15 pixels) */
+    filter: blur(15px); /* Desfoque de 15 pixels */
+    transform: scale(1.2); /* Zoom de 120% */
 }
 
 .screen {
