@@ -234,8 +234,8 @@ const bgImages = [
     // Adicione todos os nomes dos seus arquivos aqui
 ];
 
-// Configuração da Música de Fundo (audio/inicio.ogg)
-const audioFundo = new Audio('audio/inicio.ogg');
+// Configuração da Música de Fundo (audio/trilha.ogg)
+const audioFundo = new Audio('audio/trilha.ogg');
 audioFundo.loop = true;
 const audioAcerto = new Audio('audio/acerto.ogg');
 const audioErro = new Audio('audio/erro.ogg');
