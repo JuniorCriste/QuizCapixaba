@@ -167,6 +167,8 @@ const webcamElement = document.getElementById('webcam');
 const canvasElement = document.getElementById('canvas');
 const countdownElement = document.getElementById('countdown');
 const currentScoreElement = document.getElementById('current-score');
+// NOVO: Elemento de fundo
+const backgroundElement = document.getElementById('background-image');
 
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
@@ -174,8 +176,66 @@ let score = 0;
 let topScores = JSON.parse(localStorage.getItem('topScores')) || [];
 const topRankingSize = 5;
 
-// Configuração da Música de Fundo (audio/trilha.ogg)
-const audioFundo = new Audio('audio/trilha.ogg');
+// NOVO: Lista das suas imagens de fundo
+// ATENÇÃO: SUBSTITUA ESTA LISTA COM OS NOMES REAIS DOS SEUS ARQUIVOS JPG!
+const bgImages = [
+    'background1.jpg',
+    'background2.jpg',
+    'background3.jpg',
+    'background4.jpg',
+    'background5.jpg',
+    'background6.jpg',
+    'background7.jpg',
+    'background8.jpg',
+    'background9.jpg',
+    'background10.jpg',
+    'background11.jpg',
+    'background12.jpg',
+    'background13.jpg',
+    'background14.jpg',
+    'background15.jpg',
+    'background16.jpg',
+    'background17.jpg',
+    'background18.jpg',
+    'background19.jpg',
+    'background20.jpg',
+    'background21.jpg',
+    'background22.jpg',
+    'background23.jpg',
+    'background24.jpg',
+    'background25.jpg',
+    'background26.jpg',
+    'background27.jpg',
+    'background28.jpg',
+    'background29.jpg',
+    'background30.jpg',
+    'background31.jpg',
+    'background32.jpg',
+    'background33.jpg',
+    'background34.jpg',
+    'background35.jpg',
+    'background36.jpg',
+    'background37.jpg', 
+    'background38.jpg',
+    'background39.jpg',
+    'background40.jpg',
+    'background41.jpg',
+    'background42.jpg',
+    'background43.jpg',
+    'background44.jpg',
+    'background45.jpg',
+    'background46.jpg',
+    'background47.jpg',
+    'background48.jpg',
+    'background49.jpg',
+    'background50.jpg',
+    'background51.jpg',
+    'background52.jpg'
+    // Adicione todos os nomes dos seus arquivos aqui
+];
+
+// Configuração da Música de Fundo (audio/inicio.ogg)
+const audioFundo = new Audio('audio/inicio.ogg');
 audioFundo.loop = true;
 const audioAcerto = new Audio('audio/acerto.ogg');
 const audioErro = new Audio('audio/erro.ogg');
@@ -195,7 +255,19 @@ function shuffleArray(array) {
     }
 }
 
-// REMOVIDO: tryPlayAudio e listeners globais que tocavam o áudio na tela inicial.
+// NOVO: Função para selecionar e aplicar a imagem de fundo aleatória
+function setRandomBackground() {
+    if (bgImages.length === 0) return;
+    const randomIndex = Math.floor(Math.random() * bgImages.length);
+    const selectedImage = bgImages[randomIndex];
+    
+    // Assume que as imagens estão em 'img/background/'
+    backgroundElement.style.backgroundImage = `url('img/background/${selectedImage}')`;
+}
+
+// Aplica o fundo aleatório ao carregar a página
+setRandomBackground();
+
 
 function startGame() {
     // Tenta iniciar a música de fundo do jogo
@@ -339,6 +411,8 @@ function showRanking() {
             clearInterval(interval);
             endGameScreen.classList.add('hidden');
             startScreen.classList.remove('hidden');
+            // NOVO: Aplica um novo fundo aleatório ao retornar para a tela inicial
+            setRandomBackground();
         }
     }, 1000);
 }
