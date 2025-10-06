@@ -173,11 +173,10 @@ let currentQuestionIndex = 0;
 let score = 0;
 let topScores = JSON.parse(localStorage.getItem('topScores')) || [];
 const topRankingSize = 5;
-let audioPlayed = false; // Flag para controlar se o áudio já foi iniciado
 
-// Configuração do Áudio de Início em Loop
-const audioInicio = new Audio('audio/inicio.ogg');
-audioInicio.loop = true;
+// Configuração da Música de Fundo (audio/trilha.ogg)
+const audioFundo = new Audio('audio/trilha.ogg');
+audioFundo.loop = true;
 const audioAcerto = new Audio('audio/acerto.ogg');
 const audioErro = new Audio('audio/erro.ogg');
 const audioVitoria = new Audio('audio/campeao.ogg');
@@ -196,32 +195,12 @@ function shuffleArray(array) {
     }
 }
 
-// NOVO: Função para tentar iniciar o áudio de fundo
-function tryPlayAudio() {
-    if (!audioPlayed && !startScreen.classList.contains('hidden')) {
-        audioInicio.play()
-            .then(() => {
-                audioPlayed = true; // Sucesso na reprodução
-                // Remove o listener para que não tente iniciar o áudio novamente
-                document.removeEventListener('click', tryPlayAudio);
-                document.removeEventListener('keydown', tryPlayAudio);
-            })
-            .catch(e => {
-                // Continua ouvindo por interações se falhar
-                console.log("Áudio bloqueado. Esperando interação: ", e.message);
-            });
-    }
-}
-
-// NOVO: Adiciona listeners para iniciar o áudio na primeira interação (clique ou teclado)
-document.addEventListener('click', tryPlayAudio);
-document.addEventListener('keydown', tryPlayAudio);
+// REMOVIDO: tryPlayAudio e listeners globais que tocavam o áudio na tela inicial.
 
 function startGame() {
-    // Para o áudio de início em loop
-    audioInicio.pause();
-    audioInicio.currentTime = 0;
-
+    // Tenta iniciar a música de fundo do jogo
+    audioFundo.play().catch(e => console.log("Música de fundo bloqueada. O jogo continuará sem som de fundo."));
+    
     startScreen.classList.add('hidden');
     endGameScreen.classList.add('hidden');
     gameScreen.classList.remove('hidden');
@@ -245,11 +224,9 @@ function displayQuestion() {
     const options = currentQuestion.options;
     options.forEach((option, index) => {
         const button = optionButtons[index];
-        // Encontra o atalho de teclado correto para o ID do botão
         const shortcutKey = Object.keys(keyboardMap).find(key => keyboardMap[key] === button.id.slice(-1));
         button.innerHTML = `<span>${shortcutKey}</span>${option}`;
         button.dataset.answer = option;
-        // Reativa o event listener para clique nos botões
         button.onclick = () => checkAnswer(button.dataset.answer);
     });
 }
@@ -269,6 +246,10 @@ function checkAnswer(selectedAnswer) {
 }
 
 async function endGame(lost = false) {
+    // Pausa a música de fundo
+    audioFundo.pause();
+    audioFundo.currentTime = 0;
+
     gameScreen.classList.add('hidden');
     endGameScreen.classList.remove('hidden');
     finalScoreElement.textContent = score;
@@ -358,15 +339,6 @@ function showRanking() {
             clearInterval(interval);
             endGameScreen.classList.add('hidden');
             startScreen.classList.remove('hidden');
-            // Retorna para a tela inicial: Toca o áudio de início em loop
-            audioInicio.currentTime = 0; // Garante que começa do início
-            audioInicio.play().catch(e => {
-                console.log("Áudio bloqueado no retorno. Reativando listener para próxima interação.");
-                // Reativa os listeners se falhar, caso o usuário tenha ido para outra aba.
-                audioPlayed = false;
-                document.addEventListener('click', tryPlayAudio);
-                document.addEventListener('keydown', tryPlayAudio);
-            });
         }
     }, 1000);
 }
@@ -376,9 +348,6 @@ startButton.addEventListener('click', startGame);
 restartButton.addEventListener('click', startGame);
 
 document.addEventListener('keydown', (e) => {
-    // Se o áudio ainda não foi iniciado, tenta iniciar com a tecla
-    tryPlayAudio();
-    
     if (gameScreen.classList.contains('hidden')) {
         return;
     }
@@ -394,9 +363,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keydown', (event) => {
-    // Se o áudio ainda não foi iniciado, tenta iniciar com a tecla
-    tryPlayAudio();
-    
     if (!startScreen.classList.contains('hidden') && (event.key === '5' || event.key === ' ' || event.key === 'Enter')) {
         startButton.click();
     }
