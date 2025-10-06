@@ -166,12 +166,18 @@ const rankingContainer = document.getElementById('ranking-container');
 const webcamElement = document.getElementById('webcam');
 const canvasElement = document.getElementById('canvas');
 const countdownElement = document.getElementById('countdown');
+const currentScoreElement = document.getElementById('current-score');
 
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let topScores = JSON.parse(localStorage.getItem('topScores')) || [];
 const topRankingSize = 5;
+
+const audioInicio = new Audio('audio/inicio.ogg');
+const audioAcerto = new Audio('audio/acerto.ogg');
+const audioErro = new Audio('audio/erro.ogg');
+const audioVitoria = new Audio('audio/campeao.ogg');
 
 const keyboardMap = {
     '2': 'd',
@@ -195,6 +201,8 @@ function startGame() {
     shuffleArray(shuffledQuestions);
     currentQuestionIndex = 0;
     score = 0;
+    currentScoreElement.textContent = score;
+    audioInicio.play();
     displayQuestion();
 }
 
@@ -210,23 +218,23 @@ function displayQuestion() {
     const options = currentQuestion.options;
     options.forEach((option, index) => {
         const button = optionButtons[index];
-        button.textContent = option;
+        button.innerHTML = `<span>${Object.keys(keyboardMap).find(key => keyboardMap[key] === button.id.slice(-1))}</span>${option}`;
         button.dataset.answer = option;
+        // Adiciona o event listener para clique
+        button.onclick = () => checkAnswer(button.dataset.answer);
     });
-
-    optionButtons[0].innerHTML = `<span>4</span>${options[0]}`;
-    optionButtons[1].innerHTML = `<span>8</span>${options[1]}`;
-    optionButtons[2].innerHTML = `<span>6</span>${options[2]}`;
-    optionButtons[3].innerHTML = `<span>2</span>${options[3]}`;
 }
 
 function checkAnswer(selectedAnswer) {
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
     if (selectedAnswer === currentQuestion.answer) {
         score++;
+        currentScoreElement.textContent = score;
+        audioAcerto.play();
         currentQuestionIndex++;
         displayQuestion();
     } else {
+        audioErro.play();
         endGame(true); // Perdeu
     }
 }
@@ -241,10 +249,11 @@ async function endGame(lost = false) {
         endGameMessageElement.textContent = `Você errou e perdeu! Sua pontuação foi ${score}.`;
     } else {
         endGameMessageElement.textContent = 'Parabéns, você completou o quiz!';
+        audioVitoria.play();
     }
     
     // VERIFICAÇÃO RESTAURADA: Só captura a foto se o jogador entrar no ranking
-    const isTopPlayer = topScores.length < topRankingSize || score > topScores[topScores.length - 1].score;
+    const isTopPlayer = topScores.length < topRankingSize || score > (topScores.length > 0 ? topScores[topScores.length - 1].score : -1);
 
     if (isTopPlayer) {
         rankingMessageElement.textContent = 'Você entrou para o ranking! Preparando para capturar sua foto...';

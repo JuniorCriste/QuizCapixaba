@@ -113,3 +113,12 @@ body {
     color: white;
     margin-top: 20px;
 }
+
+#score-display {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
