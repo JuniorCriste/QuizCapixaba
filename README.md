@@ -2,7 +2,7 @@
  Jogo de perguntas e respostas desenvolvido para demonstração em Dia D da Tecnologia da rede estadual de escolas do Espírito Santo. O jogo consiste em 30 questões sobre o Estado e sua cultura! Jogue com seus amigos, alunos e colegas de trabalho. 
  
 ##### Instruções:
-Vídeo 
+Vídeo  tutorial
 | Link  | Sobre |
 | ------------------- | ------------------- |
 |  [Acessar Jogo](https://juniorcriste.github.io/QuizCapixaba/) |  Jogo de Perguntas e Respostas sobre o Espírito Santo| 
