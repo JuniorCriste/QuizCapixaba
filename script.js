@@ -328,7 +328,7 @@ async function endGame(lost = false) {
     restartButton.classList.add('hidden');
 
     if (lost) {
-        endGameMessageElement.textContent = `Você errou e perdeu! Sua pontuação foi ${score}.`;
+        endGameMessageElement.textContent = `Você errou e perdeu!`;
     } else {
         endGameMessageElement.textContent = 'Parabéns, você completou o quiz!';
         audioVitoria.play();
