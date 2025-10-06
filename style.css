@@ -43,6 +43,7 @@ body {
 #credits {
     text-align: center;
     color: white;
+    text-shadow: 2px 2px 5px grey;
     font-size: 11px;
     font-family: montserrat;
     bottom: 0; 
