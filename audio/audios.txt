@@ -1,6 +1,6 @@
 Áudios extraídos da biblioteca de áudios do Linux:
 
-campeao.ogg - Original: usr/share/sounds/sound-icons/xylofon.wav 
-acerto.ogg - Original: 
-erro.ogg - Original: 
+campeao.ogg - Original: /usr/share/sounds/sound-icons/trumpet-12.wav
+acerto.ogg - Original: /usr/share/sounds/freedesktop/stereo/trash-empty.oga
+erro.ogg - Original: /usr/share/sounds/sound-icons/gummy-cat-2.wav
 inicio.ogg - Original: 
