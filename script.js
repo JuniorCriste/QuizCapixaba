@@ -36,7 +36,7 @@ const quizData = [
     },
     {
         question: "Em qual região do Espírito Santo está localizada Ecoporanga?",
-        options: ["Região Metropolitana", "Região Sul", "Região Noroeste", "Região Serrana"],
+        options: ["Região Metropolitana", "Região Noroeste", "Região Sul", "Região Serrana"],
         answer: "Região Noroeste"
     },
     {
