@@ -16,7 +16,7 @@ const quizData = [
     },
     {
         question: "Qual é a principal festa religiosa realizada em Anchieta?",
-        options: ["Festa da Penha", "Festa de São Pedro", "Festa Nacional de São José de AnchietaFesta de Iemanjá", "Festa Nacional de São José de Anchieta"],
+        options: ["Festa da Penha", "Festa de São Pedro", "Festa de Iemanjá", "Festa Nacional de São José de Anchieta"],
         answer: "Festa Nacional de São José de Anchieta"
     },
     {
@@ -121,7 +121,7 @@ const quizData = [
     },
     {
         question: "Qual festa popular reúne o Congo e a devoção a São Benedito em várias cidades capixabas?",
-        options: ["Folia de Reis", "Festa do Divino Espírito Santo", "Festa de São Benedito", "Festa de Nossa Senhora da Penha"],
+        options: ["Festa de São Benedito", "Festa do Divino Espírito Santo", "Folia de Reis", "Festa de Nossa Senhora da Penha"],
         answer: "Festa de São Benedito"
     },
     {
@@ -131,7 +131,7 @@ const quizData = [
     },
     {
         question: "Qual cantor famoso nasceu em Cachoeiro de Itapemirim?",
-        options: ["Erasmo Carlos", "Fagner", "Roberto Carlos", "Supla"],
+        options: ["Erasmo Carlos", "Fagner", "Supla", "Roberto Carlos"],
         answer: "Roberto Carlos"
     },
     {
