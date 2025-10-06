@@ -16,7 +16,7 @@ const quizData = [
     },
     {
         question: "Qual é a principal festa religiosa realizada em Anchieta?",
-        options: ["Festa da Penha", "Festa de São Pedro", "Festa Nacional de São José de Anchieta", "Festa de Iemanjá"],
+        options: ["Festa da Penha", "Festa de São Pedro", "Festa Nacional de São José de AnchietaFesta de Iemanjá", "Festa Nacional de São José de Anchieta"],
         answer: "Festa Nacional de São José de Anchieta"
     },
     {
@@ -31,7 +31,7 @@ const quizData = [
     },
     {
         question: "Qual município é conhecido como “Cidade Saúde” devido ao turismo de praias e balneários?",
-        options: ["Vitória", "Linhares", "Guarapari", "São Mateus"],
+        options: ["Guarapari", "Linhares", "Vitória", "São Mateus"],
         answer: "Guarapari"
     },
     {
@@ -173,15 +173,11 @@ let currentQuestionIndex = 0;
 let score = 0;
 let topScores = JSON.parse(localStorage.getItem('topScores')) || [];
 const topRankingSize = 5;
+let audioPlayed = false; // Flag para controlar se o áudio já foi iniciado
 
-// Configuração e Início do Áudio de Início em Loop
+// Configuração do Áudio de Início em Loop
 const audioInicio = new Audio('audio/inicio.ogg');
 audioInicio.loop = true;
-// Tenta tocar o áudio. Isso pode falhar em alguns navegadores devido a políticas de autoplay
-// Sem uma interação do usuário. Adicionaremos um listener para garantir.
-document.addEventListener('DOMContentLoaded', () => {
-    audioInicio.play().catch(e => console.log("Autoplay bloqueado, o áudio iniciará com o primeiro clique."));
-});
 const audioAcerto = new Audio('audio/acerto.ogg');
 const audioErro = new Audio('audio/erro.ogg');
 const audioVitoria = new Audio('audio/campeao.ogg');
@@ -199,6 +195,27 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+// NOVO: Função para tentar iniciar o áudio de fundo
+function tryPlayAudio() {
+    if (!audioPlayed && !startScreen.classList.contains('hidden')) {
+        audioInicio.play()
+            .then(() => {
+                audioPlayed = true; // Sucesso na reprodução
+                // Remove o listener para que não tente iniciar o áudio novamente
+                document.removeEventListener('click', tryPlayAudio);
+                document.removeEventListener('keydown', tryPlayAudio);
+            })
+            .catch(e => {
+                // Continua ouvindo por interações se falhar
+                console.log("Áudio bloqueado. Esperando interação: ", e.message);
+            });
+    }
+}
+
+// NOVO: Adiciona listeners para iniciar o áudio na primeira interação (clique ou teclado)
+document.addEventListener('click', tryPlayAudio);
+document.addEventListener('keydown', tryPlayAudio);
 
 function startGame() {
     // Para o áudio de início em loop
@@ -256,12 +273,6 @@ async function endGame(lost = false) {
     endGameScreen.classList.remove('hidden');
     finalScoreElement.textContent = score;
     restartButton.classList.add('hidden');
-
-    // Se o jogo recomeçar pela tela final, o áudio de início deve tocar novamente
-    restartButton.onclick = () => {
-        audioInicio.play().catch(e => console.log("Início de áudio falhou no restart."));
-        startGame();
-    };
 
     if (lost) {
         endGameMessageElement.textContent = `Você errou e perdeu! Sua pontuação foi ${score}.`;
@@ -348,18 +359,26 @@ function showRanking() {
             endGameScreen.classList.add('hidden');
             startScreen.classList.remove('hidden');
             // Retorna para a tela inicial: Toca o áudio de início em loop
-            audioInicio.play().catch(e => console.log("Início de áudio falhou no retorno."));
+            audioInicio.currentTime = 0; // Garante que começa do início
+            audioInicio.play().catch(e => {
+                console.log("Áudio bloqueado no retorno. Reativando listener para próxima interação.");
+                // Reativa os listeners se falhar, caso o usuário tenha ido para outra aba.
+                audioPlayed = false;
+                document.addEventListener('click', tryPlayAudio);
+                document.addEventListener('keydown', tryPlayAudio);
+            });
         }
     }, 1000);
 }
 
 // Event Listeners
 startButton.addEventListener('click', startGame);
-// O restartButton.addEventListener('click', startGame) original foi substituído
-// pelo 'onclick' dentro de endGame para garantir que o áudio de início toque
-// no retorno à tela inicial.
+restartButton.addEventListener('click', startGame);
 
 document.addEventListener('keydown', (e) => {
+    // Se o áudio ainda não foi iniciado, tenta iniciar com a tecla
+    tryPlayAudio();
+    
     if (gameScreen.classList.contains('hidden')) {
         return;
     }
@@ -375,9 +394,10 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keydown', (event) => {
+    // Se o áudio ainda não foi iniciado, tenta iniciar com a tecla
+    tryPlayAudio();
+    
     if (!startScreen.classList.contains('hidden') && (event.key === '5' || event.key === ' ' || event.key === 'Enter')) {
-        // Tenta garantir que o áudio de início comece se não tiver começado por política de autoplay
-        audioInicio.play().catch(e => console.log("Início de áudio falhou no teclado."));
         startButton.click();
     }
 });
