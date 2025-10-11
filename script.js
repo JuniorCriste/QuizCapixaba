@@ -479,21 +479,21 @@ function showRanking() {
     });
     
     countdownElement.classList.remove('hidden');
-    let countdown = 5;
-    countdownElement.textContent = `Retornando em ${countdown}...`;
+    // Mudei o countdown para 6 para dar 5 segundos completos de contagem regressiva
+    let countdown = 6; 
+    countdownElement.textContent = `Reiniciando em ${countdown}...`;
     const interval = setInterval(() => {
         countdown--;
-        countdownElement.textContent = `Retornando em ${countdown}...`;
+        countdownElement.textContent = `Reiniciando em ${countdown}...`;
         if (countdown <= 0) {
             clearInterval(interval);
-            endGameScreen.classList.add('hidden');
-            startScreen.classList.remove('hidden');
             
-            // NOVO: Remove o desfoque ao retornar para a tela inicial
-            backgroundElement.classList.remove('blurred'); 
+            // >>>>>>>>>>>>>>> ALTERAÇÃO AQUI <<<<<<<<<<<<<<<
+            // Em vez de mudar as classes para voltar à tela inicial, 
+            // recarrega a página inteira, simulando o "F5".
+            window.location.reload(); 
+            // >>>>>>>>>>>>>>> FIM DA ALTERAÇÃO <<<<<<<<<<<<<<<
             
-            // Aplica um novo fundo aleatório ao retornar para a tela inicial
-            setRandomBackground();
         }
     }, 1000);
 }
