@@ -151,16 +151,11 @@ const quizData = [
     }
 ];
 
-window.addEventListener('load', () => {
-  const preloader = document.getElementById('preloader');
-  const conteudo = document.getElementById('conteudo');
-  preloader.classList.add('fade-out');
-  setTimeout(() => {
-    preloader.style.display = 'none';
-    conteudo.style.display = 'block';
-  }, 600); // o tempo combina com o "transition" do CSS
-});
+// ----------------------------------------------------------------------
+// Variáveis e Seletores do DOM
+// ----------------------------------------------------------------------
 
+// ... (seus seletores permanecem)
 const startScreen = document.getElementById('start-screen');
 const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
@@ -178,6 +173,9 @@ const canvasElement = document.getElementById('canvas');
 const countdownElement = document.getElementById('countdown');
 const currentScoreElement = document.getElementById('current-score');
 const backgroundElement = document.getElementById('background-image');
+const preloader = document.getElementById('preloader');
+const conteudo = document.getElementById('conteudo'); // Novo seletor
+// ... (resto das suas variáveis)
 
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
@@ -256,6 +254,75 @@ const keyboardMap = {
     '8': 'b'
 };
 
+// ----------------------------------------------------------------------
+// NOVO: LÓGICA DE PRELOAD E INICIALIZAÇÃO
+// ----------------------------------------------------------------------
+
+/**
+ * [NOVA FUNÇÃO] Contém a lógica de fade-out e remoção do preloader.
+ */
+function hidePreloader() {
+    preloader.classList.add('fade-out');
+    // Garante que o conteúdo principal só aparece após o fade-out
+    setTimeout(() => {
+        preloader.style.display = 'none';
+        conteudo.style.display = 'block';
+    }, 600); // 600ms para corresponder ao tempo de transição no style.css
+}
+
+/**
+ * [NOVA FUNÇÃO] Seleciona uma imagem aleatória, força o carregamento e só
+ * então esconde o preloader e mostra o jogo.
+ */
+function loadInitialBackground() {
+    // 1. Lógica para carregar a imagem de fundo principal (uma das 52)
+    if (bgImages.length === 0) {
+        hidePreloader(); 
+        return;
+    }
+    
+    // Seleciona a imagem de fundo que será exibida
+    const randomIndex = Math.floor(Math.random() * bgImages.length);
+    const selectedImage = bgImages[randomIndex];
+    const imageUrlPath = `img/background/${selectedImage}`; // Caminho completo
+
+    // 2. Cria um objeto Image para forçar o download e usar o evento 'onload'
+    const img = new Image();
+
+    // 3. O que fazer quando a imagem estiver 100% carregada
+    img.onload = () => {
+        // Aplica o background APÓS ter certeza que ele está carregado
+        backgroundElement.style.backgroundImage = `url('${imageUrlPath}')`;
+        // Esconde o preloader
+        hidePreloader();
+    };
+
+    // 4. Em caso de erro, apenas esconde o preloader para evitar que o jogo trave
+    img.onerror = () => {
+        console.error("Erro ao carregar a imagem de fundo: " + imageUrlPath);
+        // Aplica um fundo padrão (ou o que estiver no CSS) e esconde o preloader
+        hidePreloader();
+    };
+
+    // 5. Inicia o download da imagem
+    img.src = imageUrlPath;
+}
+
+// ----------------------------------------------------------------------
+// FLUXO DE INICIALIZAÇÃO DO JOGO
+// ----------------------------------------------------------------------
+
+// [REMOVIDO] O bloco anterior window.addEventListener('load', ...) foi removido.
+// [REMOVIDO] A chamada setRandomBackground(); no escopo global foi removida.
+
+// [NOVO] Inicia o processo de carregamento do background principal após o DOM estar pronto
+document.addEventListener('DOMContentLoaded', loadInitialBackground);
+
+
+// ----------------------------------------------------------------------
+// RESTANTE DO CÓDIGO (mantido)
+// ----------------------------------------------------------------------
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -272,8 +339,8 @@ function setRandomBackground() {
     backgroundElement.style.backgroundImage = `url('img/background/${selectedImage}')`;
 }
 
-// Aplica o fundo aleatório ao carregar a página
-setRandomBackground();
+// O setRandomBackground original é mantido, mas não é mais chamado no início do script.
+// A imagem inicial é setada por 'loadInitialBackground'.
 
 
 function startGame() {
@@ -412,7 +479,7 @@ function showRanking() {
     });
     
     countdownElement.classList.remove('hidden');
-    let countdown = 10;
+    let countdown = 5;
     countdownElement.textContent = `Retornando em ${countdown}...`;
     const interval = setInterval(() => {
         countdown--;
