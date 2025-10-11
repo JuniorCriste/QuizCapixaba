@@ -397,48 +397,60 @@ function checkAnswer(selectedAnswer) {
 }
 
 async function endGame(lost = false) {
-    // Pausa a música de fundo
-    audioFundo.pause();
-    audioFundo.currentTime = 0;
+    // Pausa a música de fundo (supondo que você tenha essa lógica)
+    // audioFundo.pause(); 
+    // audioFundo.currentTime = 0;
 
     gameScreen.classList.add('hidden');
     endGameScreen.classList.remove('hidden');
     finalScoreElement.textContent = score;
-    restartButton.classList.add('hidden');
+    // restartButton.classList.add('hidden'); // Remova ou mantenha conforme seu código original
 
     if (lost) {
         endGameMessageElement.textContent = `Você errou e perdeu!`;
     } else {
         endGameMessageElement.textContent = 'Parabéns, você completou o quiz!';
-        audioVitoria.play();
+        // audioVitoria.play(); // Remova ou mantenha conforme seu código original
     }
 
+    // Apenas verifica se o jogador entra no ranking
     const isTopPlayer = topScores.length < topRankingSize || score > (topScores.length > 0 ? topScores[topScores.length - 1].score : -1);
 
     if (isTopPlayer) {
         rankingMessageElement.textContent = 'Você entrou para o ranking! Preparando para capturar sua foto...';
         rankingMessageElement.style.fontWeight = 'bold';
-
+        
+        // TENTA ACESSAR A CÂMERA
         try {
+            // Utilizamos 'video: true' para manter a resolução nativa, conforme solicitado
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             webcamElement.srcObject = stream;
-            webcamElement.classList.remove('hidden');
+            
+            // A webcam AGORA SÓ É MOSTRADA se o acesso for bem-sucedido
+            webcamElement.classList.remove('hidden'); 
 
             webcamElement.onloadedmetadata = () => {
-                // INICIA O CONTAGEM REGRESSIVA VISUAL APÓS A CÂMERA CARREGAR
-                startPhotoCountdown(stream);
+                // Tira a foto após um atraso (ajuste o tempo conforme necessário, ex: 5000ms = 5 segundos)
+                setTimeout(() => {
+                    takePhoto(stream);
+                }, 5000); // 5 segundos de visualização
             };
         } catch (err) {
+            // Se der erro, não mostra webcam e usa a foto placeholder
             console.error("Erro ao acessar a webcam: ", err);
             addToRanking('placeholder.png');
+            rankingMessageElement.textContent = 'Erro na câmera. Seu ranking:';
             showRanking();
         }
     } else {
+        // SE NÃO ENTROU NO RANKING: NADA DE WEBCAM/CANVAS
         rankingMessageElement.textContent = 'Você não entrou no ranking. Tente novamente!';
+        // Garante que a webcam e o canvas estão ocultos caso a lógica de topo não tenha sido executada.
+        webcamElement.classList.add('hidden');
+        canvasElement.classList.add('hidden'); 
         showRanking();
     }
 }
-
 
 /**
  * Gerencia o contador visual (5, 4, 3, 2, 1) e o flash.
@@ -491,16 +503,22 @@ function flashScreen() {
  * Lógica de tirar a foto e finalizar o ranking.
  */
 function takePhoto(stream) {
+    // Tira a foto na resolução nativa
     canvasElement.width = webcamElement.videoWidth;
     canvasElement.height = webcamElement.videoHeight;
     canvasElement.getContext('2d').drawImage(webcamElement, 0, 0, canvasElement.width, canvasElement.height);
 
     const photoDataUrl = canvasElement.toDataURL('image/jpeg');
+    
+    // 1. DESLIGA O STREAM DA CÂMERA
     stream.getTracks().forEach(track => track.stop());
-
-    addToRanking(photoDataUrl);
+    
+    // 2. ESCONDE A WEBCAM (AJUSTE SOLICITADO)
     webcamElement.classList.add('hidden');
-    rankingMessageElement.textContent = 'Foto capturada! Seu ranking:'; // Mensagem atualizada
+    
+    // 3. Finaliza, adiciona ao ranking e exibe
+    addToRanking(photoDataUrl);
+    rankingMessageElement.textContent = 'Foto capturada!';
     showRanking();
 }
 
@@ -514,6 +532,7 @@ function addToRanking(photoDataUrl) {
 }
 
 function showRanking() {
+    // ... (Lógica de exibição do ranking: rankingContainer.innerHTML = ... e topScores.forEach)
     rankingContainer.innerHTML = '';
     
     topScores.forEach((item, index) => {
@@ -535,16 +554,25 @@ function showRanking() {
         }
     });
     
+    // Lógica de contagem regressiva e reload (manutenção da tela cheia)
     countdownElement.classList.remove('hidden');
     let countdown = 6; 
     countdownElement.textContent = `Reiniciando em ${countdown}...`;
+    
     const interval = setInterval(() => {
         countdown--;
         countdownElement.textContent = `Reiniciando em ${countdown}...`;
         if (countdown <= 0) {
             clearInterval(interval);
             
-            // Em vez de mudar as classes para voltar à tela inicial, recarrega a página inteira, simulando o "F5".
+            // Salva o estado de tela cheia antes de recarregar
+            if (typeof isCurrentlyFullscreen === 'function' && isCurrentlyFullscreen()) {
+                 localStorage.setItem('fullscreen_on_reload', 'true');
+            } else {
+                 localStorage.removeItem('fullscreen_on_reload');
+            }
+
+            // Recarrega a página inteira, simulando o "F5".
             window.location.reload(); 
             
         }
