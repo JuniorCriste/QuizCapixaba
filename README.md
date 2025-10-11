@@ -15,4 +15,4 @@
 Alunos jogando o Quiz Capixaba no Dia D da Tecnologia na EEEFM José Teixeira Fialho
 
 
-###### Versão atual: 1.5
+###### Versão atual: 1.5.1
