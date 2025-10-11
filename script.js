@@ -344,6 +344,8 @@ function setRandomBackground() {
 
 
 function startGame() {
+    // Tela cheia
+    enterFullscreen(); 
     // Tenta iniciar a música de fundo do jogo
     audioFundo.play().catch(e => console.log("Música de fundo bloqueada. O jogo continuará sem som de fundo."));
     
@@ -573,3 +575,18 @@ document.addEventListener('keydown', (event) => {
         startButton.click();
     }
 });
+
+function enterFullscreen() {
+    const element = document.documentElement; // Pega o elemento <html>
+    
+    // Suporte a diferentes navegadores
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { // Firefox
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { // Chrome, Safari e Opera
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { // IE/Edge
+        element.msRequestFullscreen();
+    }
+}
