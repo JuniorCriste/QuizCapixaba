@@ -14,13 +14,13 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #FFFFF0; /* Fundo claro */
+  background-color: #fff; /* Fundo claro */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  color: #fff;
+  color: #333;
   font-family: Arial, sans-serif;
   font-size: 18px;
 }
