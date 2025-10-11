@@ -415,7 +415,8 @@ async function endGame(lost = false) {
     const isTopPlayer = topScores.length < topRankingSize || score > (topScores.length > 0 ? topScores[topScores.length - 1].score : -1);
 
     if (isTopPlayer) {
-        rankingMessageElement.textContent = 'Você entrou para o ranking! SORRIA PARA FOTO!';
+        rankingMessageElement.textContent = 'Sorria para a foto, você entrou para o ranking!';
+        rankingMessageElement.style.fontWeight = 'bold';
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             webcamElement.srcObject = stream;
