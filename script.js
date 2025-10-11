@@ -454,6 +454,7 @@ function flashScreen() {
  * Lógica de tirar a foto e finalizar o ranking.
  */
 function takePhoto(stream) {
+    const escondemold = document.getElementById('webcam');
     // 1. Tira a foto na resolução nativa
     canvasElement.width = webcamElement.videoWidth;
     canvasElement.height = webcamElement.videoHeight;
@@ -463,10 +464,10 @@ function takePhoto(stream) {
     
     // 2. DESLIGA A CÂMERA
     stream.getTracks().forEach(track => track.stop());
-    
+    el.style.display = 'none';
     // 3. ESCONDE A WEBCAM/CANVAS (AJUSTE SOLICITADO)
     webcamElement.classList.add('hidden');
-    
+    const el = document.getElementById('minhaDiv');
     // 4. Finaliza
     addToRanking(photoDataUrl);
     rankingMessageElement.textContent = 'Foto capturada! Seu ranking:';
