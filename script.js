@@ -151,6 +151,16 @@ const quizData = [
     }
 ];
 
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const conteudo = document.getElementById('conteudo');
+  preloader.classList.add('fade-out');
+  setTimeout(() => {
+    preloader.style.display = 'none';
+    conteudo.style.display = 'block';
+  }, 600); // o tempo combina com o "transition" do CSS
+});
+
 const startScreen = document.getElementById('start-screen');
 const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
