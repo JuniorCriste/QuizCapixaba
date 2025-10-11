@@ -354,50 +354,53 @@ function checkAnswer(selectedAnswer) {
 // ----------------------------------------------------------------------
 
 async function endGame(lost = false) {
-    // Pausa a música de fundo
-    audioFundo.pause();
-    audioFundo.currentTime = 0;
-
+    // ... (Mantenha o código de áudio e transição de tela aqui)
+    // audioFundo.pause();
+    
     gameScreen.classList.add('hidden');
     endGameScreen.classList.remove('hidden');
     finalScoreElement.textContent = score;
-    restartButton.classList.add('hidden');
 
     if (lost) {
         endGameMessageElement.textContent = `Você errou e perdeu!`;
     } else {
         endGameMessageElement.textContent = 'Parabéns, você completou o quiz!';
-        audioVitoria.play();
     }
-
-    // Apenas verifica se o jogador entra no ranking
+    
+    // Calcula se o jogador é um Top Player
     const isTopPlayer = topScores.length < topRankingSize || score > (topScores.length > 0 ? topScores[topScores.length - 1].score : -1);
 
     if (isTopPlayer) {
         rankingMessageElement.textContent = 'Você entrou para o ranking! Preparando para capturar sua foto...';
-        rankingMessageElement.style.fontWeight = 'bold';
         
-        // TENTA ACESSAR A CÂMERA E INICIA O CONTAGEM
+        // TENTA ACESSAR A CÂMERA
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             webcamElement.srcObject = stream;
-            // A webcam AGORA SÓ É MOSTRADA se o acesso for bem-sucedido
+            
+            // SOMENTE REMOVE A CLASSE 'hidden' (MOSTRA) SE FOR TOP PLAYER E TIVER ACESSO
             webcamElement.classList.remove('hidden'); 
 
             webcamElement.onloadedmetadata = () => {
-                // INICIA O CONTAGEM REGRESSIVA VISUAL APÓS A CÂMERA CARREGAR
-                startPhotoCountdown(stream);
+                // Tira a foto após 5 segundos de visualização
+                setTimeout(() => {
+                    takePhoto(stream);
+                }, 5000); 
             };
         } catch (err) {
-            // Se der erro, não mostra webcam e usa a foto placeholder
+            // Se der erro ao acessar a câmera (ou for negado), usa placeholder e vai para o ranking
             console.error("Erro ao acessar a webcam: ", err);
             addToRanking('placeholder.png');
             rankingMessageElement.textContent = 'Erro na câmera. Seu ranking:';
             showRanking();
         }
     } else {
-        // SE NÃO ENTROU NO RANKING: NADA DE WEBCAM/CANVAS
+        // SE NÃO ENTROU NO RANKING: NADA DE WEBCAM.
         rankingMessageElement.textContent = 'Você não entrou no ranking. Tente novamente!';
+        
+        // Garante explicitamente que a webcam está oculta
+        webcamElement.classList.add('hidden');
+        
         showRanking();
     }
 }
@@ -461,11 +464,12 @@ function takePhoto(stream) {
 
     const photoDataUrl = canvasElement.toDataURL('image/jpeg');
     
-    // 2. DESLIGA A CÂMERA
+    // 2. DESLIGA O STREAM DA CÂMERA (CRUCIAL!)
     stream.getTracks().forEach(track => track.stop());
     
-    // 3. ESCONDE A WEBCAM/CANVAS (AJUSTE SOLICITADO)
+    // 3. ESCONDE A WEBCAM E O CANVAS IMEDIATAMENTE APÓS O USO
     webcamElement.classList.add('hidden');
+    // canvasElement.classList.add('hidden'); // O canvas já está hidden no seu HTML/CSS, mas esta linha reforça.
     
     // 4. Finaliza
     addToRanking(photoDataUrl);
