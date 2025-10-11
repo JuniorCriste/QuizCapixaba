@@ -590,3 +590,36 @@ function enterFullscreen() {
         element.msRequestFullscreen();
     }
 }
+
+/**
+ * [NOVA FUNÇÃO] Verifica se a página está atualmente em tela cheia.
+ */
+function isCurrentlyFullscreen() {
+    return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+}
+
+
+// ... (Função hidePreloader e loadInitialBackground)
+
+
+// ----------------------------------------------------------------------
+// FLUXO DE INICIALIZAÇÃO DO JOGO
+// ----------------------------------------------------------------------
+
+// [PRÉ-EXISTENTE] Inicia o processo de carregamento do background principal após o DOM estar pronto
+document.addEventListener('DOMContentLoaded', loadInitialBackground);
+document.addEventListener('DOMContentLoaded', restoreFullscreen); // NOVO: Tenta restaurar a tela cheia na inicialização
+
+/**
+ * [NOVA FUNÇÃO] Tenta restaurar a tela cheia após um reload, se a flag existir.
+ */
+function restoreFullscreen() {
+    // Verifica se a flag de fullscreen foi salva antes do reload
+    if (localStorage.getItem('fullscreen_on_reload') === 'true') {
+        // Tenta reentrar em tela cheia. Pode falhar, dependendo do navegador.
+        enterFullscreen();
+        
+        // Remove a flag para que não tente entrar em tela cheia em um próximo F5 manual
+        localStorage.removeItem('fullscreen_on_reload');
+    }
+}
