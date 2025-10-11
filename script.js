@@ -156,6 +156,10 @@ const quizData = [
 // ----------------------------------------------------------------------
 
 // ... (seus seletores permanecem)
+const backgroundElement = document.getElementById('background-image');
+const preloader = document.getElementById('preloader');
+const conteudo = document.getElementById('conteudo'); 
+const photoCountdownElement = document.getElementById('photo-countdown'); // NOVO SELETOR
 const startScreen = document.getElementById('start-screen');
 const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
@@ -172,10 +176,6 @@ const webcamElement = document.getElementById('webcam');
 const canvasElement = document.getElementById('canvas');
 const countdownElement = document.getElementById('countdown');
 const currentScoreElement = document.getElementById('current-score');
-const backgroundElement = document.getElementById('background-image');
-const preloader = document.getElementById('preloader');
-const conteudo = document.getElementById('conteudo'); // Novo seletor
-// ... (resto das suas variáveis)
 
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
@@ -410,32 +410,21 @@ async function endGame(lost = false) {
         endGameMessageElement.textContent = 'Parabéns, você completou o quiz!';
         audioVitoria.play();
     }
-    
-    // VERIFICAÇÃO RESTAURADA: Só captura a foto se o jogador entrar no ranking
+
     const isTopPlayer = topScores.length < topRankingSize || score > (topScores.length > 0 ? topScores[topScores.length - 1].score : -1);
 
     if (isTopPlayer) {
-        rankingMessageElement.textContent = 'Sorria para a foto, você entrou para o ranking!';
+        rankingMessageElement.textContent = 'Você entrou para o ranking! Preparando para capturar sua foto...';
         rankingMessageElement.style.fontWeight = 'bold';
+
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             webcamElement.srcObject = stream;
             webcamElement.classList.remove('hidden');
 
             webcamElement.onloadedmetadata = () => {
-                setTimeout(() => {
-                    canvasElement.width = webcamElement.videoWidth;
-                    canvasElement.height = webcamElement.videoHeight;
-                    canvasElement.getContext('2d').drawImage(webcamElement, 0, 0, canvasElement.width, canvasElement.height);
-                    
-                    const photoDataUrl = canvasElement.toDataURL('image/jpeg');
-                    stream.getTracks().forEach(track => track.stop());
-                    
-                    addToRanking(photoDataUrl);
-                    webcamElement.classList.add('hidden');
-                    showRanking();
-
-                }, 5000);
+                // INICIA O CONTAGEM REGRESSIVA VISUAL APÓS A CÂMERA CARREGAR
+                startPhotoCountdown(stream);
             };
         } catch (err) {
             console.error("Erro ao acessar a webcam: ", err);
@@ -446,6 +435,71 @@ async function endGame(lost = false) {
         rankingMessageElement.textContent = 'Você não entrou no ranking. Tente novamente!';
         showRanking();
     }
+}
+
+
+/**
+ * Gerencia o contador visual (5, 4, 3, 2, 1) e o flash.
+ */
+function startPhotoCountdown(stream) {
+    let photoTimer = 5;
+    photoCountdownElement.classList.remove('hidden');
+    photoCountdownElement.textContent = photoTimer;
+
+    const interval = setInterval(() => {
+        photoTimer--;
+
+        if (photoTimer > 0) {
+            photoCountdownElement.textContent = photoTimer;
+        } else if (photoTimer === 0) {
+            photoCountdownElement.textContent = ''; // Limpa o número
+            clearInterval(interval);
+
+            // PISCAR (FLASH)
+            flashScreen();
+
+            // TIRA A FOTO APÓS O FLASH INICIAR (0.3s)
+            setTimeout(() => {
+                takePhoto(stream);
+            }, 300); 
+
+        } 
+    }, 1000);
+}
+
+
+/**
+ * Cria e aplica a animação de flash na tela.
+ */
+function flashScreen() {
+    const flashDiv = document.createElement('div');
+    flashDiv.classList.add('flash-screen');
+    document.body.appendChild(flashDiv);
+
+    // Remove o flash da DOM após o término da animação
+    setTimeout(() => {
+        flashDiv.remove();
+        // Esconde o elemento do contador de foto após o flash
+        photoCountdownElement.classList.add('hidden');
+    }, 300); 
+}
+
+
+/**
+ * Lógica de tirar a foto e finalizar o ranking.
+ */
+function takePhoto(stream) {
+    canvasElement.width = webcamElement.videoWidth;
+    canvasElement.height = webcamElement.videoHeight;
+    canvasElement.getContext('2d').drawImage(webcamElement, 0, 0, canvasElement.width, canvasElement.height);
+
+    const photoDataUrl = canvasElement.toDataURL('image/jpeg');
+    stream.getTracks().forEach(track => track.stop());
+
+    addToRanking(photoDataUrl);
+    webcamElement.classList.add('hidden');
+    rankingMessageElement.textContent = 'Foto capturada! Seu ranking:'; // Mensagem atualizada
+    showRanking();
 }
 
 function addToRanking(photoDataUrl) {
