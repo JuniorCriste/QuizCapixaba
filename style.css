@@ -158,7 +158,27 @@ body {
 }
 
 #webcam {
-    height: 80%;
+    /* Define o tamanho exato da visualização na tela */
+    width: 300px;
+    height: 300px; 
+    
+    /* Garante que a webcam seja tratada como um bloco centralizado */
+    margin: 20px auto; 
+    display: block !important; 
+    
+    /* IMPORTANTE: Garante que o feed de vídeo preencha o quadrado de 300x300,
+       cortando bordas, mas sem distorcer ou deixar barras pretas. */
+    object-fit: cover; 
+    
+    /* Estilos visuais para a caixa da câmera */
+    border-radius: 10px; 
+    border: 5px solid white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* O elemento canvas, que é quem realmente tira a foto, deve continuar invisível */
+#canvas {
+    display: none;
 }
 
 #start-button, #restart-button {
