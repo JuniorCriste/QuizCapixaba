@@ -157,6 +157,10 @@ body {
     border: 3px solid #007bff;
 }
 
+#webcam {
+    height: auto;
+}
+
 #start-button, #restart-button {
     padding: 10px 20px;
     font-size: 1.2em;
