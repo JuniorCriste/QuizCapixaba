@@ -155,11 +155,6 @@ const quizData = [
 // Variáveis e Seletores do DOM
 // ----------------------------------------------------------------------
 
-// ... (seus seletores permanecem)
-const backgroundElement = document.getElementById('background-image');
-const preloader = document.getElementById('preloader');
-const conteudo = document.getElementById('conteudo'); 
-const photoCountdownElement = document.getElementById('photo-countdown'); // NOVO SELETOR
 const startScreen = document.getElementById('start-screen');
 const gameScreen = document.getElementById('game-screen');
 const endGameScreen = document.getElementById('end-game-screen');
@@ -176,6 +171,10 @@ const webcamElement = document.getElementById('webcam');
 const canvasElement = document.getElementById('canvas');
 const countdownElement = document.getElementById('countdown');
 const currentScoreElement = document.getElementById('current-score');
+const backgroundElement = document.getElementById('background-image');
+const preloader = document.getElementById('preloader');
+const conteudo = document.getElementById('conteudo'); 
+const photoCountdownElement = document.getElementById('photo-countdown'); // NOVO SELETOR
 
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
@@ -185,59 +184,17 @@ const topRankingSize = 5;
 
 // ATENÇÃO: SUBSTITUA ESTA LISTA COM OS NOMES REAIS DOS SEUS ARQUIVOS JPG!
 const bgImages = [
-    'background1.jpg',
-    'background2.jpg',
-    'background3.jpg',
-    'background4.jpg',
-    'background5.jpg',
-    'background6.jpg',
-    'background7.jpg',
-    'background8.jpg',
-    'background9.jpg',
-    'background10.jpg',
-    'background11.jpg',
-    'background12.jpg',
-    'background13.jpg',
-    'background14.jpg',
-    'background15.jpg',
-    'background16.jpg',
-    'background17.jpg',
-    'background18.jpg',
-    'background19.jpg',
-    'background20.jpg',
-    'background21.jpg',
-    'background22.jpg',
-    'background23.jpg',
-    'background24.jpg',
-    'background25.jpg',
-    'background26.jpg',
-    'background27.jpg',
-    'background28.jpg',
-    'background29.jpg',
-    'background30.jpg',
-    'background31.jpg',
-    'background32.jpg',
-    'background33.jpg',
-    'background34.jpg',
-    'background35.jpg',
-    'background36.jpg',
-    'background37.jpg', 
-    'background38.jpg',
-    'background39.jpg',
-    'background40.jpg',
-    'background41.jpg',
-    'background42.jpg',
-    'background43.jpg',
-    'background44.jpg',
-    'background45.jpg',
-    'background46.jpg',
-    'background47.jpg',
-    'background48.jpg',
-    'background49.jpg',
-    'background50.jpg',
-    'background51.jpg',
-    'background52.jpg'
-    // Adicione todos os nomes dos seus arquivos aqui
+    'background1.jpg', 'background2.jpg', 'background3.jpg', 'background4.jpg', 'background5.jpg', 
+    'background6.jpg', 'background7.jpg', 'background8.jpg', 'background9.jpg', 'background10.jpg', 
+    'background11.jpg', 'background12.jpg', 'background13.jpg', 'background14.jpg', 'background15.jpg', 
+    'background16.jpg', 'background17.jpg', 'background18.jpg', 'background19.jpg', 'background20.jpg', 
+    'background21.jpg', 'background22.jpg', 'background23.jpg', 'background24.jpg', 'background25.jpg', 
+    'background26.jpg', 'background27.jpg', 'background28.jpg', 'background29.jpg', 'background30.jpg', 
+    'background31.jpg', 'background32.jpg', 'background33.jpg', 'background34.jpg', 'background35.jpg', 
+    'background36.jpg', 'background37.jpg', 'background38.jpg', 'background39.jpg', 'background40.jpg', 
+    'background41.jpg', 'background42.jpg', 'background43.jpg', 'background44.jpg', 'background45.jpg', 
+    'background46.jpg', 'background47.jpg', 'background48.jpg', 'background49.jpg', 'background50.jpg', 
+    'background51.jpg', 'background52.jpg'
 ];
 
 // Configuração da Música de Fundo (audio/trilha.ogg)
@@ -255,73 +212,83 @@ const keyboardMap = {
 };
 
 // ----------------------------------------------------------------------
-// NOVO: LÓGICA DE PRELOAD E INICIALIZAÇÃO
+// FUNÇÕES DE PRELOAD, TELA CHEIA E RESTAURAÇÃO
 // ----------------------------------------------------------------------
 
 /**
- * [NOVA FUNÇÃO] Contém a lógica de fade-out e remoção do preloader.
+ * Tenta colocar o navegador em modo tela cheia.
  */
-function hidePreloader() {
-    preloader.classList.add('fade-out');
-    // Garante que o conteúdo principal só aparece após o fade-out
-    setTimeout(() => {
-        preloader.style.display = 'none';
-        conteudo.style.display = 'block';
-    }, 600); // 600ms para corresponder ao tempo de transição no style.css
+function enterFullscreen() {
+    const element = document.documentElement; // Pega o elemento <html>
+    
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { // Firefox
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { // Chrome, Safari e Opera
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { // IE/Edge
+        element.msRequestFullscreen();
+    }
 }
 
 /**
- * [NOVA FUNÇÃO] Seleciona uma imagem aleatória, força o carregamento e só
- * então esconde o preloader e mostra o jogo.
+ * Verifica se a página está atualmente em tela cheia.
  */
+function isCurrentlyFullscreen() {
+    return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+}
+
+function hidePreloader() {
+    preloader.classList.add('fade-out');
+    setTimeout(() => {
+        preloader.style.display = 'none';
+        conteudo.style.display = 'block';
+    }, 600); 
+}
+
 function loadInitialBackground() {
-    // 1. Lógica para carregar a imagem de fundo principal (uma das 52)
     if (bgImages.length === 0) {
         hidePreloader(); 
         return;
     }
     
-    // Seleciona a imagem de fundo que será exibida
     const randomIndex = Math.floor(Math.random() * bgImages.length);
     const selectedImage = bgImages[randomIndex];
-    const imageUrlPath = `img/background/${selectedImage}`; // Caminho completo
+    const imageUrlPath = `img/background/${selectedImage}`;
 
-    // 2. Cria um objeto Image para forçar o download e usar o evento 'onload'
     const img = new Image();
 
-    // 3. O que fazer quando a imagem estiver 100% carregada
     img.onload = () => {
-        // Aplica o background APÓS ter certeza que ele está carregado
         backgroundElement.style.backgroundImage = `url('${imageUrlPath}')`;
-        // Esconde o preloader
         hidePreloader();
     };
 
-    // 4. Em caso de erro, apenas esconde o preloader para evitar que o jogo trave
     img.onerror = () => {
         console.error("Erro ao carregar a imagem de fundo: " + imageUrlPath);
-        // Aplica um fundo padrão (ou o que estiver no CSS) e esconde o preloader
         hidePreloader();
     };
 
-    // 5. Inicia o download da imagem
     img.src = imageUrlPath;
 }
 
+/**
+ * Tenta restaurar a tela cheia após um reload.
+ */
+function restoreFullscreen() {
+    if (localStorage.getItem('fullscreen_on_reload') === 'true') {
+        enterFullscreen();
+        localStorage.removeItem('fullscreen_on_reload');
+    }
+}
+
 // ----------------------------------------------------------------------
-// FLUXO DE INICIALIZAÇÃO DO JOGO
+// FLUXO DE INICIALIZAÇÃO E JOGO
 // ----------------------------------------------------------------------
 
-// [REMOVIDO] O bloco anterior window.addEventListener('load', ...) foi removido.
-// [REMOVIDO] A chamada setRandomBackground(); no escopo global foi removida.
-
-// [NOVO] Inicia o processo de carregamento do background principal após o DOM estar pronto
 document.addEventListener('DOMContentLoaded', loadInitialBackground);
+document.addEventListener('DOMContentLoaded', restoreFullscreen);
 
-
-// ----------------------------------------------------------------------
-// RESTANTE DO CÓDIGO (mantido)
-// ----------------------------------------------------------------------
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -330,26 +297,11 @@ function shuffleArray(array) {
     }
 }
 
-function setRandomBackground() {
-    if (bgImages.length === 0) return;
-    const randomIndex = Math.floor(Math.random() * bgImages.length);
-    const selectedImage = bgImages[randomIndex];
-    
-    // Assume que as imagens estão em 'img/background/'
-    backgroundElement.style.backgroundImage = `url('img/background/${selectedImage}')`;
-}
-
-// O setRandomBackground original é mantido, mas não é mais chamado no início do script.
-// A imagem inicial é setada por 'loadInitialBackground'.
-
-
 function startGame() {
-    // Tela cheia
     enterFullscreen(); 
-    // Tenta iniciar a música de fundo do jogo
+    
     audioFundo.play().catch(e => console.log("Música de fundo bloqueada. O jogo continuará sem som de fundo."));
     
-    // NOVO: Aplica o desfoque ao iniciar o jogo
     backgroundElement.classList.add('blurred');
     
     startScreen.classList.add('hidden');
@@ -363,6 +315,7 @@ function startGame() {
     displayQuestion();
 }
 
+// ... (displayQuestion e checkAnswer permanecem iguais)
 function displayQuestion() {
     if (currentQuestionIndex >= shuffledQuestions.length) {
         endGame(false); // Ganhou
@@ -396,21 +349,25 @@ function checkAnswer(selectedAnswer) {
     }
 }
 
+// ----------------------------------------------------------------------
+// END GAME E LÓGICA DE WEBCAM (AJUSTADA)
+// ----------------------------------------------------------------------
+
 async function endGame(lost = false) {
-    // Pausa a música de fundo (supondo que você tenha essa lógica)
-    // audioFundo.pause(); 
-    // audioFundo.currentTime = 0;
+    // Pausa a música de fundo
+    audioFundo.pause();
+    audioFundo.currentTime = 0;
 
     gameScreen.classList.add('hidden');
     endGameScreen.classList.remove('hidden');
     finalScoreElement.textContent = score;
-    // restartButton.classList.add('hidden'); // Remova ou mantenha conforme seu código original
+    restartButton.classList.add('hidden');
 
     if (lost) {
         endGameMessageElement.textContent = `Você errou e perdeu!`;
     } else {
         endGameMessageElement.textContent = 'Parabéns, você completou o quiz!';
-        // audioVitoria.play(); // Remova ou mantenha conforme seu código original
+        audioVitoria.play();
     }
 
     // Apenas verifica se o jogador entra no ranking
@@ -420,20 +377,16 @@ async function endGame(lost = false) {
         rankingMessageElement.textContent = 'Você entrou para o ranking! Preparando para capturar sua foto...';
         rankingMessageElement.style.fontWeight = 'bold';
         
-        // TENTA ACESSAR A CÂMERA
+        // TENTA ACESSAR A CÂMERA E INICIA O CONTAGEM
         try {
-            // Utilizamos 'video: true' para manter a resolução nativa, conforme solicitado
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             webcamElement.srcObject = stream;
-            
             // A webcam AGORA SÓ É MOSTRADA se o acesso for bem-sucedido
             webcamElement.classList.remove('hidden'); 
 
             webcamElement.onloadedmetadata = () => {
-                // Tira a foto após um atraso (ajuste o tempo conforme necessário, ex: 5000ms = 5 segundos)
-                setTimeout(() => {
-                    takePhoto(stream);
-                }, 5000); // 5 segundos de visualização
+                // INICIA O CONTAGEM REGRESSIVA VISUAL APÓS A CÂMERA CARREGAR
+                startPhotoCountdown(stream);
             };
         } catch (err) {
             // Se der erro, não mostra webcam e usa a foto placeholder
@@ -445,12 +398,10 @@ async function endGame(lost = false) {
     } else {
         // SE NÃO ENTROU NO RANKING: NADA DE WEBCAM/CANVAS
         rankingMessageElement.textContent = 'Você não entrou no ranking. Tente novamente!';
-        // Garante que a webcam e o canvas estão ocultos caso a lógica de topo não tenha sido executada.
-        webcamElement.classList.add('hidden');
-        canvasElement.classList.add('hidden'); 
         showRanking();
     }
 }
+
 
 /**
  * Gerencia o contador visual (5, 4, 3, 2, 1) e o flash.
@@ -503,25 +454,26 @@ function flashScreen() {
  * Lógica de tirar a foto e finalizar o ranking.
  */
 function takePhoto(stream) {
-    // Tira a foto na resolução nativa
+    // 1. Tira a foto na resolução nativa
     canvasElement.width = webcamElement.videoWidth;
     canvasElement.height = webcamElement.videoHeight;
     canvasElement.getContext('2d').drawImage(webcamElement, 0, 0, canvasElement.width, canvasElement.height);
 
     const photoDataUrl = canvasElement.toDataURL('image/jpeg');
     
-    // 1. DESLIGA O STREAM DA CÂMERA
+    // 2. DESLIGA A CÂMERA
     stream.getTracks().forEach(track => track.stop());
     
-    // 2. ESCONDE A WEBCAM (AJUSTE SOLICITADO)
+    // 3. ESCONDE A WEBCAM/CANVAS (AJUSTE SOLICITADO)
     webcamElement.classList.add('hidden');
     
-    // 3. Finaliza, adiciona ao ranking e exibe
+    // 4. Finaliza
     addToRanking(photoDataUrl);
-    rankingMessageElement.textContent = 'Foto capturada!';
+    rankingMessageElement.textContent = 'Foto capturada! Seu ranking:';
     showRanking();
 }
 
+// ... (addToRanking permanece igual)
 function addToRanking(photoDataUrl) {
     topScores.push({ score, photo: photoDataUrl });
     topScores.sort((a, b) => b.score - a.score);
@@ -532,7 +484,6 @@ function addToRanking(photoDataUrl) {
 }
 
 function showRanking() {
-    // ... (Lógica de exibição do ranking: rankingContainer.innerHTML = ... e topScores.forEach)
     rankingContainer.innerHTML = '';
     
     topScores.forEach((item, index) => {
@@ -554,24 +505,22 @@ function showRanking() {
         }
     });
     
-    // Lógica de contagem regressiva e reload (manutenção da tela cheia)
     countdownElement.classList.remove('hidden');
     let countdown = 6; 
     countdownElement.textContent = `Reiniciando em ${countdown}...`;
-    
     const interval = setInterval(() => {
         countdown--;
         countdownElement.textContent = `Reiniciando em ${countdown}...`;
         if (countdown <= 0) {
             clearInterval(interval);
             
-            // Salva o estado de tela cheia antes de recarregar
-            if (typeof isCurrentlyFullscreen === 'function' && isCurrentlyFullscreen()) {
+            // ANTES DO RELOAD: Salva o estado de tela cheia se estiver ativo
+            if (isCurrentlyFullscreen()) {
                  localStorage.setItem('fullscreen_on_reload', 'true');
             } else {
                  localStorage.removeItem('fullscreen_on_reload');
             }
-
+            
             // Recarrega a página inteira, simulando o "F5".
             window.location.reload(); 
             
@@ -603,51 +552,3 @@ document.addEventListener('keydown', (event) => {
         startButton.click();
     }
 });
-
-function enterFullscreen() {
-    const element = document.documentElement; // Pega o elemento <html>
-    
-    // Suporte a diferentes navegadores
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome, Safari e Opera
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // IE/Edge
-        element.msRequestFullscreen();
-    }
-}
-
-/**
- * [NOVA FUNÇÃO] Verifica se a página está atualmente em tela cheia.
- */
-function isCurrentlyFullscreen() {
-    return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-}
-
-
-// ... (Função hidePreloader e loadInitialBackground)
-
-
-// ----------------------------------------------------------------------
-// FLUXO DE INICIALIZAÇÃO DO JOGO
-// ----------------------------------------------------------------------
-
-// [PRÉ-EXISTENTE] Inicia o processo de carregamento do background principal após o DOM estar pronto
-document.addEventListener('DOMContentLoaded', loadInitialBackground);
-document.addEventListener('DOMContentLoaded', restoreFullscreen); // NOVO: Tenta restaurar a tela cheia na inicialização
-
-/**
- * [NOVA FUNÇÃO] Tenta restaurar a tela cheia após um reload, se a flag existir.
- */
-function restoreFullscreen() {
-    // Verifica se a flag de fullscreen foi salva antes do reload
-    if (localStorage.getItem('fullscreen_on_reload') === 'true') {
-        // Tenta reentrar em tela cheia. Pode falhar, dependendo do navegador.
-        enterFullscreen();
-        
-        // Remove a flag para que não tente entrar em tela cheia em um próximo F5 manual
-        localStorage.removeItem('fullscreen_on_reload');
-    }
-}

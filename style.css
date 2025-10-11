@@ -158,23 +158,55 @@ body {
 }
 
 #webcam {
-    /* Define o tamanho exato da visualização na tela */
     width: 300px;
     height: 300px; 
-    
-    /* Garante que a webcam seja tratada como um bloco centralizado */
     margin: 20px auto; 
     display: block !important; 
-    
-    /* IMPORTANTE: Garante que o feed de vídeo preencha o quadrado de 300x300,
-       cortando bordas, mas sem distorcer ou deixar barras pretas. */
     object-fit: cover; 
-    
-    /* Estilos visuais para a caixa da câmera */
     border-radius: 10px; 
     border: 5px solid white;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
+
+/* NOVO: Estilo para o contador de foto flutuante */
+#photo-countdown {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10em; /* Contagem bem grande */
+    color: white; /* Texto em branco */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    background-color: transparent;
+    z-index: 10000; /* Acima de tudo */
+    pointer-events: none; /* Não bloqueia cliques */
+}
+
+/* NOVO: Classe para o flash branco */
+.flash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+    z-index: 10001; /* Acima do contador */
+    pointer-events: none;
+    animation: flash-animation 0.3s ease-out; /* Duração do flash */
+}
+
+/* NOVO: Animação do flash */
+@keyframes flash-animation {
+    0% { opacity: 1; } /* Começa totalmente opaco (branco) */
+    100% { opacity: 0; } /* Desaparece rapidamente */
+}
+
 
 /* O elemento canvas, que é quem realmente tira a foto, deve continuar invisível */
 #canvas {
