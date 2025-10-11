@@ -434,7 +434,7 @@ async function endGame(lost = false) {
                     webcamElement.classList.add('hidden');
                     showRanking();
 
-                }, 2000);
+                }, 5000);
             };
         } catch (err) {
             console.error("Erro ao acessar a webcam: ", err);
@@ -479,7 +479,6 @@ function showRanking() {
     });
     
     countdownElement.classList.remove('hidden');
-    // Mudei o countdown para 6 para dar 5 segundos completos de contagem regressiva
     let countdown = 6; 
     countdownElement.textContent = `Reiniciando em ${countdown}...`;
     const interval = setInterval(() => {
@@ -488,11 +487,8 @@ function showRanking() {
         if (countdown <= 0) {
             clearInterval(interval);
             
-            // >>>>>>>>>>>>>>> ALTERAÇÃO AQUI <<<<<<<<<<<<<<<
-            // Em vez de mudar as classes para voltar à tela inicial, 
-            // recarrega a página inteira, simulando o "F5".
+            // Em vez de mudar as classes para voltar à tela inicial, recarrega a página inteira, simulando o "F5".
             window.location.reload(); 
-            // >>>>>>>>>>>>>>> FIM DA ALTERAÇÃO <<<<<<<<<<<<<<<
             
         }
     }, 1000);
