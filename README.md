@@ -5,19 +5,14 @@ O jogo consiste em **30 questões** sobre o Estado e sua cultura! Jogue com seus
 ---
 
 ## 📝 Instruções e Dicas
-
-> Jogue com atenção! Responda corretamente para marcar pontos e tentar entrar no **ranking**.  
-> Os 5 jogadores com mais pontos ficarão com **sua foto no top**!
-> Ao errar, você perde e volta para  **0 pontos**! 
-> O ranking é local, ou seja, só é disponível no mesmo dispositivo. Jogue com seus amigos em um mesmo dispositivo e divirta-se!
-> Funcionamento perfeito em computadores e smartphones.
+ 🔵 Jogue com atenção! Responda corretamente para marcar pontos e tentar entrar no **ranking**.  
+ ⚪ Os 5 jogadores com mais pontos ficarão com **sua foto no top**!
+ 🔴 Ao errar, você perde e volta para  **0 pontos**! 
+ ⚫ O ranking é local, ou seja, só é disponível no mesmo dispositivo (compatível com computadores e smartphones). **Jogue com seus amigos em um mesmo dispositivo e divirta-se**! 
 
 ---
 
-## 🖼️ Galeria
-
 ### 🔗 Links Úteis
-
 | Link  | Sobre |
 | ----------------------------- | ------------------------------ |
 | [**Acessar Jogo**](https://juniorcriste.github.io/QuizCapixaba/) | Jogo de Perguntas e Respostas sobre o Espírito Santo |
@@ -25,7 +20,7 @@ O jogo consiste em **30 questões** sobre o Estado e sua cultura! Jogue com seus
 | [**Mais Projetos**](https://github.com/JuniorCriste?tab=repositories) | Repositórios diversos e diversas linguagens |
 | [**Site/Blog & Social**](https://informaticode.com.br) | Site e redes sociais do Dev |
 
-
+## 🖼️ Galeria
 ![Alunos jogando o Quiz Capixaba](img/quizcapixaba.png?raw=true)
 *Alunos jogando o Quiz Capixaba no Dia D da Tecnologia na EEEFM José Teixeira Fialho*
 
