@@ -372,7 +372,7 @@ async function endGame(lost = false) {
     }
 
     // Apenas verifica se o jogador entra no ranking
-    const isTopPlayer = topScores.length < topRankingSize || score > (topScores.length > 0 ? topScores[topScores.length - 1].score : -1);
+    const isTopPlayer = score > 0 && (topScores.length < topRankingSize || score > (topScores.length > 0 ? topScores[topScores.length - 1].score : -1));
 
     if (isTopPlayer) {
         rankingMessageElement.textContent = 'Você entrou para o ranking! Preparando para capturar sua foto...';
