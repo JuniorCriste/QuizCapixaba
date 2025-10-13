@@ -173,6 +173,7 @@ const countdownElement = document.getElementById('countdown');
 const currentScoreElement = document.getElementById('current-score');
 const backgroundElement = document.getElementById('background-image');
 const preloader = document.getElementById('preloader');
+const moldura = document.getElementById('moldura');
 const conteudo = document.getElementById('conteudo'); 
 const photoCountdownElement = document.getElementById('photo-countdown'); // NOVO SELETOR
 
@@ -463,12 +464,10 @@ function takePhoto(stream) {
     
     // 2. DESLIGA A CÂMERA
     stream.getTracks().forEach(track => track.stop());
-    // const escondemold = document.getElementById('webcam');    
-    // escondemold.style.display = 'none';
 
     // 3. ESCONDE A WEBCAM/CANVAS (AJUSTE SOLICITADO)
     webcamElement.classList.add('hidden');
-    webcamElement.style.display = 'none';
+    moldura.style.display = 'none';
     const el = document.getElementById('minhaDiv');
     // 4. Finaliza
     addToRanking(photoDataUrl);
