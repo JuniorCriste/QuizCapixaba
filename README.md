@@ -5,7 +5,7 @@ O jogo consiste em **30 questões** sobre o Estado e sua cultura! Jogue com seus
 
 
 ## 📝 Instruções e Dicas
- 🔵 Jogue com atenção! Responda corretamente para marcar pontos e tentar entrar no **ranking**.  
+ 🔵 Jogue com atenção, respondendo corretamente para marcar pontos e tentar entrar no **ranking**.  
  ⚪ Os 5 jogadores com mais pontos ficarão com **sua foto no top**!  
  🔴 Ao errar, você perde e volta para  **0 pontos**!  
  🟣 Jogue com seu **mouse** ou **teclado numérico**.  
