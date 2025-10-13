@@ -2,15 +2,15 @@
 Jogo de perguntas e respostas desenvolvido para demonstração no **Dia D da Tecnologia** da rede estadual de escolas do Espírito Santo.  
 O jogo consiste em **30 questões** sobre o Estado e sua cultura! Jogue com seus amigos, alunos e colegas de trabalho.  
 
----
+
 
 ## 📝 Instruções e Dicas
  🔵 Jogue com atenção! Responda corretamente para marcar pontos e tentar entrar no **ranking**.  
- ⚪ Os 5 jogadores com mais pontos ficarão com **sua foto no top**!
- 🔴 Ao errar, você perde e volta para  **0 pontos**! 
+ ⚪ Os 5 jogadores com mais pontos ficarão com **sua foto no top**!  
+ 🔴 Ao errar, você perde e volta para  **0 pontos**!  
  ⚫ O ranking é local, ou seja, só é disponível no mesmo dispositivo (compatível com computadores e smartphones). **Jogue com seus amigos em um mesmo dispositivo e divirta-se**! 
 
----
+
 
 ### 🔗 Links Úteis
 | Link  | Sobre |
@@ -23,6 +23,8 @@ O jogo consiste em **30 questões** sobre o Estado e sua cultura! Jogue com seus
 ## 🖼️ Galeria
 ![Alunos jogando o Quiz Capixaba](img/quizcapixaba.png?raw=true)
 *Alunos jogando o Quiz Capixaba no Dia D da Tecnologia na EEEFM José Teixeira Fialho*
+
+---
 
 | Versões  | Mudanças |
 | :-------------------: | ------------------- |
