@@ -11,7 +11,7 @@ O jogo consiste em **30 questões** sobre o Estado e sua cultura! Jogue com seus
  🟣 Jogue com seu **mouse** ou **teclado numérico**.  
  🟡 Faça um **campeonato** com seus amigos ou na sua escola!  
  🟢 Disponível em computadores e smartphones.  
- ⚫ Sistema de **ranking local**, com lista de melhores jogadores disponível no aparelho utilizado. Ideal para dispositivos como telas e computadores de acesso público!
+ ⚫ Sistema de **ranking local**, com lista de melhores jogadores disponível no aparelho utilizado - Ideal para dispositivos como telas e computadores de acesso público!
 
 ### 🔗 Links Úteis
 | Link  | Sobre |
