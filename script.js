@@ -463,10 +463,12 @@ function takePhoto(stream) {
     
     // 2. DESLIGA A CÂMERA
     stream.getTracks().forEach(track => track.stop());
-    const escondemold = document.getElementById('webcam');    
-    escondemold.style.display = 'none';
+    // const escondemold = document.getElementById('webcam');    
+    // escondemold.style.display = 'none';
+
     // 3. ESCONDE A WEBCAM/CANVAS (AJUSTE SOLICITADO)
     webcamElement.classList.add('hidden');
+    webcamElement.style.display('none');
     const el = document.getElementById('minhaDiv');
     // 4. Finaliza
     addToRanking(photoDataUrl);
