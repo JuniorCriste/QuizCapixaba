@@ -8,9 +8,10 @@ O jogo consiste em **30 questões** sobre o Estado e sua cultura! Jogue com seus
  🔵 Jogue com atenção! Responda corretamente para marcar pontos e tentar entrar no **ranking**.  
  ⚪ Os 5 jogadores com mais pontos ficarão com **sua foto no top**!  
  🔴 Ao errar, você perde e volta para  **0 pontos**!  
- ⚫ O ranking é local, ou seja, só é disponível no mesmo dispositivo (compatível com computadores e smartphones). **Jogue com seus amigos em um mesmo dispositivo e divirta-se**! 
-
-
+ 🟣 Jogue com seu **mouse** ou **teclado numérico**. 
+ 🟡 Faça um **campeonato** com seus amigos ou na sua escola!
+ 🟢 Disponível em computadores e smartphones.
+ ⚫ Sistema de **ranking local**, com lista de melhores jogadores disponível no aparelho utilizado. Ideal para dispositivos como telas e computadores de acesso público!
 
 ### 🔗 Links Úteis
 | Link  | Sobre |
