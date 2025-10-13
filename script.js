@@ -399,6 +399,7 @@ async function endGame(lost = false) {
     } else {
         // SE NÃO ENTROU NO RANKING: NADA DE WEBCAM/CANVAS
         rankingMessageElement.textContent = 'Você não entrou no ranking. Tente novamente!';
+        moldura.style.display = 'none';
         showRanking();
     }
 }
