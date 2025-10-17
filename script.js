@@ -277,9 +277,9 @@ const quizData = [
         answer: "Tupiniquins e Guaranis"
     },
     {
-        question: "Qual das cidades a seguir NÃO está entre as quatro mais populosas do Espírito Santo?",
+        question: "Qual das cidades a seguir não está entre as quatro mais populosas do Espírito Santo?",
         options: ["Serra", "Vila Velha", "Cariacica", "Cachoeiro de Itapemirim"],
-        answer: "Guarapari"
+        answer: "Cachoeiro de Itapemirim"
     },
     {
         question: "O lema 'Trabalha e Confia' da bandeira capixaba foi inspirado na doutrina de qual santo?",
@@ -287,17 +287,17 @@ const quizData = [
         answer: "Santo Inácio de Loyola"
     },
     {
-        question: "Não é um artista capixaba:",//
+        question: "Não é um artista capixaba:",
         options: ["Silva", "Rastaclone", "Falamansa", "Paulo Sérgio"],
         answer: "Falamansa"
     },
     {
-        question: "Qual artista capixaba teve sua música tocada em Marte?",//
+        question: "Qual artista capixaba teve sua música tocada em Marte?",
         options: ["Supercombo", "Macucos", "Roberto Carlos", "Casaca"],
         answer: "Casaca"
     },
     {
-        question: "Nascido em Cachoeiro de Itapemirim, o capixaba Rubem Braga ficou conhecido como um dos maiores",//
+        question: "Nascido em Cachoeiro de Itapemirim, o capixaba Rubem Braga ficou conhecido como um dos maiores",
         options: ["Cronistas brasileiros", "Pagodeiros brasileiros", "Dançarinos de Forró brasileiros", "Jornalistas brasileiros"],
         answer: "Cronistas brasileiros"
     }
