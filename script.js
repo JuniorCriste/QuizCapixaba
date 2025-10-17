@@ -420,9 +420,9 @@ async function endGame(lost = false) {
 
     if (lost) {
         // MENSAGEM ATUALIZADA PARA PERDA DE VIDAS
-        endGameMessageElement.textContent = `Você errou e perdeu o jogo! Vidas esgotadas.`;
+        endGameMessageElement.textContent = `Vidas esgotadas!`;
     } else {
-        endGameMessageElement.textContent = 'Parabéns, você completou o quiz!';
+        endGameMessageElement.textContent = 'Parabéns, você completou o quiz! 💥';
         audioVitoria.play();
     }
 
@@ -430,7 +430,7 @@ async function endGame(lost = false) {
     const isTopPlayer = score > 0 && (topScores.length < topRankingSize || score > (topScores.length > 0 ? topScores[topScores.length - 1].score : -1));
 
     if (isTopPlayer) {
-        rankingMessageElement.textContent = 'Você entrou para o ranking! Preparando para capturar sua foto...';
+        rankingMessageElement.textContent = 'Você entrou para o ranking! Pose pra foto!';
         rankingMessageElement.style.fontWeight = 'bold';
         
         // TENTA ACESSAR A CÂMERA E INICIA O CONTAGEM
@@ -453,7 +453,7 @@ async function endGame(lost = false) {
         }
     } else {
         // SE NÃO ENTROU NO RANKING: NADA DE WEBCAM/CANVAS
-        rankingMessageElement.textContent = 'Você não entrou no ranking. Tente novamente!';
+        rankingMessageElement.textContent = 'Você não entrou no ranking. Tente novamente! 😔';
         moldura.style.display = 'none';
         showRanking();
     }
