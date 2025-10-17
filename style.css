@@ -264,5 +264,46 @@ body {
     }
 }
 
+#photo-countdown {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
-/* ... (Flash Screen e Flash Animation repetido no CSS original, removido daqui para evitar redundância, mas mantido a versão final no arquivo para você) */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10em; /* Contagem bem grande */
+    color: white; /* Texto em branco */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    background-color: transparent;
+    z-index: 10000; /* Acima de tudo */
+    pointer-events: none; /* Não bloqueia cliques */
+}
+
+.flash-screen {
+
+
+
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+
+
+    opacity: 0;
+    z-index: 10001; /* Acima do contador */
+    pointer-events: none;
+    animation: flash-animation 0.3s ease-out; /* Duração do flash */
+}
+
+@keyframes flash-animation {
+    0% { opacity: 1; } /* Começa totalmente opaco (branco) */
+    100% { opacity: 0; } /* Desaparece rapidamente */
+}
