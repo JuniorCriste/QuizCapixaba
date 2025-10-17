@@ -148,6 +148,158 @@ const quizData = [
         question: "Colatina é conhecida como:",
         options: ["Cidade Saúde", "Cidade das Dunas", "Capital da Polenta", "Princesa do Norte"],
         answer: "Princesa do Norte"
+    }, // Fim das 30 questões da primeira versão!
+    
+    // Inicio das 30 questões da versão 2.0.
+    {
+        question: "Qual dos municípios abaixo não está entre os maiores em extensão territorial do Espírito Santo?",//
+        options: ["São Mateus", "Linhares", "Ecoporanga", "Viana"],
+        answer: "Viana"
+    },
+    {
+        question: "A capital do Espírito Santo, Vitória, é uma das três capitais brasileiras localizadas em uma:",
+        options: ["Mata", "Ilha", "Agreste", "Região de restinga"],
+        answer: "Ilha"
+    },
+    {
+        question: "Quantos municípios o estado do Espírito Santo possui?",
+        options: ["45", "78", "92", "101"],
+        answer: "78"
+    },
+    {
+        question: "O clima predominante no Espírito Santo é:",
+        options: ["Subtropical úmido", "Semiárido", "Tropical", "Equatorial"],
+        answer: "Tropical"
+    },
+    {
+        question: "Qual foi a primeira capital do Espírito Santo?",
+        options: ["Guarapari", "Serra", "Vila Velha", "Cachoeiro de Itapemirim"],
+        answer: "Vila Velha"
+    },
+    {
+        question: "Durante o período colonial, além dos portugueses, o Espírito Santo foi invadido por quais outras nacionalidades?",
+        options: ["Espanhóis e Italianos", "Franceses e Holandeses", "Ingleses e Alemães", "Suíços e Suecos"],
+        answer: "Franceses e Holandeses"
+    },
+    {
+        question: "Qual é o lema que está escrito na bandeira do Espírito Santo?",
+        options: ["Ordem e Progresso", "Libertas quae sera tamen", "Trabalha e Confia", "Liberdade e Luta"],
+        answer: "Trabalha e Confia"
+    },
+    {
+        question: "Qual variedade de café o Espírito Santo é o maior produtor do Brasil?",
+        options: ["Café Arábica", "Café Bourbon", "Café Conilon", "Café Catuaí"],
+        answer: "Café Conilon"
+    },
+    {
+        question: "Qual é o maior município do Espírito Santo em extensão territorial?",
+        options: ["Serra", "Cariacica", "Linhares", "Vitória"],
+        answer: "Linhares"
+    },
+    {
+        question: "A Reserva Biológica de Sooretama, uma das últimas áreas de Mata Atlântica preservadas, fica em parte no município de:",
+        options: ["Itarana", "Sooretama", "Ibiraçu", "Afonso Cláudio"],
+        answer: "Sooretama"
+    },
+    {
+        question: "Qual município do ES possui a maior população pomerana do Brasil?",
+        options: ["Venda Nova do Imigrante", "Santa Maria de Jetibá", "Domingos Martins", "Conceição do Castelo"],
+        answer: "Santa Maria de Jetibá"
+    },
+    {
+        question: "Qual língua, de origem germânica, ainda é falada por muitas famílias e estudada em escolas em Santa Maria de Jetibá?",
+        options: ["Dialeto Alemão", "Pomerano", "Holandês", "Italiano"],
+        answer: "Pomerano"
+    },
+    {
+        question: "Marataízes é conhecida em diversas partes do Brasil por sua grande produção de qual fruta?",
+        options: ["Uva", "Abacaxi", "Caju", "Mamão"],
+        answer: "Abacaxi"
+    },
+    {
+        question: "O Espírito Santo possui um importante transporte de passageiros por trem na linha:",
+        options: ["Estrada de Ferro Central do Brasil", "Estrada de Ferro Carajás", "Estrada de Ferro Vitória a Minas", "Estrada de Ferro Litorânea"],
+        answer: "Estrada de Ferro Vitória a Minas"
+    },
+    {
+        question: "O 'Estado de Jeová' foi um movimento místico-religioso e separatista que ocorreu na década de 1950, em qual região do ES?",
+        options: ["Região do Caparaó", "Região Serrana", "Região do Contestado (Cotaxé/Ecoporanga)", "Litoral Sul"],
+        answer: "Região do Contestado (Cotaxé/Ecoporanga)"
+    },
+    {
+        question: "O Contestado de Cotaxé foi uma disputa territorial de décadas entre o Espírito Santo e qual outro estado?",
+        options: ["Bahia", "Rio de Janeiro", "Minas Gerais", "Goiás"],
+        answer: "Minas Gerais"
+    },
+    {
+        question: "O Parque Pedra da Cebola, em Vitória, recebeu esse nome devido a uma formação rochosa natural cuja erosão a fez parecer:",
+        options: ["Um pão de açúcar", "Uma pirâmide", "Uma cebola descascada", "Um mamão"],
+        answer: "Uma cebola descascada"
+    },
+    {
+        question: "Qual é a principal instituição pública de ensino superior do Espírito Santo, fundada em 1954?",
+        options: ["IFES (Instituto Federal do ES)", "UFES (Universidade Federal do ES)", "UVV (Universidade de Vila Velha)", "UAB (Universidade Aberta do Brasil)"],
+        answer: "UFES (Universidade Federal do ES)"
+    },
+    {
+        question: "Em qual município do Espírito Santo está localizada a Praia Amor de Verão, próxima à foz do Rio Cricaré?",
+        options: ["Guarapari", "Conceição da Barra", "São Mateus", "Aracruz"],
+        answer: "Conceição da Barra"
+    },
+    {
+        question: "O estado recebeu o nome 'Espírito Santo' porque foi descoberto em 23 de maio de 1535, dia de:",
+        options: ["Corpus Christi", "Nossa Senhora da Penha", "Pentecostes", "Sexta-feira Santa"],
+        answer: "Pentecostes"
+    },
+    {
+        question: "O local onde o primeiro donatário, Vasco Fernandes Coutinho, desembarcou no ES, é onde hoje fica a cidade de:",
+        options: ["Vitória", "Guaçuí", "Vila Velha", "Cariacica"],
+        answer: "Vila Velha"
+    },
+    {
+        question: "Em que ano o Convento da Penha começou a ser construído, sobre um penhasco de 154 metros?",
+        options: ["1978", "1800", "1558", "2003"],
+        answer: "1558"
+    },
+    {
+        question: "A Pedra Azul, localizada em Domingos Martins, é famosa por uma característica única. Qual é ela?",
+        options: ["Ter inscrições rupestres milenares", "Emitir sons em dias de chuva", "Mudar de cor e refletir até 36 tonalidades", "Ser o ponto mais alto do estado"],
+        answer: "Mudar de cor e refletir até 36 tonalidades"
+    },
+    {
+        question: "O Porto de Tubarão é especializado principalmente na exportação de:",
+        options: ["Petróleo", "Soja", "Minério de ferro", "Café"],
+        answer: "Minério de ferro"
+    },
+    {
+        question: "A região de Aracruz era habitada originalmente pelos povos indígenas:",
+        options: ["Guaranis e Caingangues", "Tupiniquins e Guaranis", "Krenak e Pataxós", "Bororo e Terena"],
+        answer: "Tupiniquins e Guaranis"
+    },
+    {
+        question: "Qual das cidades a seguir NÃO está entre as quatro mais populosas do Espírito Santo?",
+        options: ["Serra", "Vila Velha", "Cariacica", "Cachoeiro de Itapemirim"],
+        answer: "Guarapari"
+    },
+    {
+        question: "O lema 'Trabalha e Confia' da bandeira capixaba foi inspirado na doutrina de qual santo?",
+        options: ["São Benedito", "São Pedro", "Santo Inácio de Loyola", "São José de Anchieta"],
+        answer: "Santo Inácio de Loyola"
+    },
+    {
+        question: "Não é um artista capixaba:",//
+        options: ["Silva", "Rastaclone", "Falamansa", "Paulo Sérgio"],
+        answer: "Falamansa"
+    },
+    {
+        question: "Qual artista capixaba teve sua música tocada em Marte?",//
+        options: ["Supercombo", "Macucos", "Roberto Carlos", "Casaca"],
+        answer: "Casaca"
+    },
+    {
+        question: "Nascido em Cachoeiro de Itapemirim, o capixaba Rubem Braga ficou conhecido como um dos maiores",//
+        options: ["Cronistas brasileiros", "Pagodeiros brasileiros", "Dançarinos de Forró brasileiros", "Jornalistas brasileiros"],
+        answer: "Casaca"
     }
 ];
 
