@@ -168,46 +168,6 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-/* NOVO: Estilo para o contador de foto flutuante */
-#photo-countdown {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10em; /* Contagem bem grande */
-    color: white; /* Texto em branco */
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(0,0,0,0.8);
-    background-color: transparent;
-    z-index: 10000; /* Acima de tudo */
-    pointer-events: none; /* Não bloqueia cliques */
-}
-
-/* NOVO: Classe para o flash branco */
-.flash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    opacity: 0;
-    z-index: 10001; /* Acima do contador */
-    pointer-events: none;
-    animation: flash-animation 0.3s ease-out; /* Duração do flash */
-}
-
-/* NOVO: Animação do flash */
-@keyframes flash-animation {
-    0% { opacity: 1; } /* Começa totalmente opaco (branco) */
-    100% { opacity: 0; } /* Desaparece rapidamente */
-}
-
-
 /* O elemento canvas, que é quem realmente tira a foto, deve continuar invisível */
 #canvas {
     display: none;
@@ -233,41 +193,76 @@ body {
     color: #333;
 }
 
-/* NOVO: Estilo para o contador de foto flutuante */
-#photo-countdown {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+/* ------------------------------------------- */
+/* ESTILOS DE VIDAS (NOVO) */
+/* ------------------------------------------- */
+
+#life-container {
+    /* Posiciona as vidas ao lado do score */
+    position: absolute; 
+    top: 20px; 
+    right: 150px; /* Ajuste para não colidir com o score */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10em; /* Contagem bem grande */
-    color: white; /* Texto em branco */
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(0,0,0,0.8);
-    background-color: transparent;
-    z-index: 10000; /* Acima de tudo */
-    pointer-events: none; /* Não bloqueia cliques */
+    gap: 5px;
+    z-index: 10; 
 }
 
-/* NOVO: Classe para o flash branco */
-.flash-screen {
+.life-icon {
+    width: 25px; /* Tamanho dos corações */
+    height: auto;
+    transition: opacity 0.2s; /* Para suavizar a perda de vida */
+}
+
+/* ------------------------------------------- */
+/* EFEITO GLITCH (NOVO) */
+/* ------------------------------------------- */
+
+/* Overlay de tela cheia para o efeito de erro */
+#glitch-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: white;
+    pointer-events: none; /* Não impede cliques */
+    background-color: transparent;
+    z-index: 99999; /* Acima de tudo */
     opacity: 0;
-    z-index: 10001; /* Acima do contador */
-    pointer-events: none;
-    animation: flash-animation 0.3s ease-out; /* Duração do flash */
 }
 
-/* NOVO: Animação do flash */
-@keyframes flash-animation {
-    0% { opacity: 1; } /* Começa totalmente opaco (branco) */
-    100% { opacity: 0; } /* Desaparece rapidamente */
+/* Classe para ativar o efeito de glitch */
+.glitch-active {
+    opacity: 1 !important;
+    /* Animação ultra-rápida (0.2s) com steps para simular falha de vídeo */
+    animation: glitch-anim 0.2s steps(4, start) forwards; 
 }
+
+/* Animação Rápida de Glitch com deslocamento e cor vermelha */
+@keyframes glitch-anim {
+    0% {
+        transform: translate(0);
+        filter: hue-rotate(0deg) saturate(1.5); 
+    }
+    25% {
+        transform: translate(2px, -2px) skew(5deg); 
+        filter: hue-rotate(10deg) saturate(3);
+        background-color: rgba(255, 0, 0, 0.4); /* Overlay vermelho */
+    }
+    50% {
+        transform: translate(-3px, 3px) skew(-3deg);
+        background-color: rgba(0, 0, 0, 0.3); /* Flicker escuro */
+    }
+    75% {
+        transform: translate(4px, -4px) skew(2deg);
+        filter: hue-rotate(-10deg) saturate(2.5);
+        background-color: rgba(255, 0, 0, 0.5);
+    }
+    100% {
+        opacity: 0; 
+        transform: translate(0);
+        filter: hue-rotate(0deg) saturate(1);
+    }
+}
+
+
+/* ... (Flash Screen e Flash Animation repetido no CSS original, removido daqui para evitar redundância, mas mantido a versão final no arquivo para você) */

@@ -175,7 +175,17 @@ const backgroundElement = document.getElementById('background-image');
 const preloader = document.getElementById('preloader');
 const moldura = document.getElementById('moldura');
 const conteudo = document.getElementById('conteudo'); 
-const photoCountdownElement = document.getElementById('photo-countdown'); // NOVO SELETOR
+const photoCountdownElement = document.getElementById('photo-countdown'); 
+
+// NOVO: Seletores e Variáveis para Vidas e Glitch
+const glitchOverlay = document.getElementById('glitch-overlay');
+const lifeIcons = [
+    document.getElementById('life-1'),
+    document.getElementById('life-2'),
+    document.getElementById('life-3')
+];
+let lives = 3; // Variável de controle das vidas
+// FIM NOVO
 
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
@@ -313,10 +323,47 @@ function startGame() {
     currentQuestionIndex = 0;
     score = 0;
     currentScoreElement.textContent = score;
+
+    // NOVO: Inicializa as vidas
+    lives = 3;
+    updateLifeDisplay();
+
     displayQuestion();
 }
 
-// ... (displayQuestion e checkAnswer permanecem iguais)
+/**
+ * NOVO: Atualiza a exibição dos corações (vidas) na tela.
+ */
+function updateLifeDisplay() {
+    // Ordem: Vida 1 (azul), Vida 2 (branca), Vida 3 (rosa)
+    if (lifeIcons[0]) lifeIcons[0].style.opacity = lives >= 1 ? 1 : 0.3;
+    if (lifeIcons[1]) lifeIcons[1].style.opacity = lives >= 2 ? 1 : 0.3;
+    if (lifeIcons[2]) lifeIcons[2].style.opacity = lives >= 3 ? 1 : 0.3;
+}
+
+/**
+ * NOVO: Aplica e remove rapidamente o efeito glitch na tela e toca um som de erro.
+ */
+function triggerGlitchEffect() {
+    if (!glitchOverlay) return;
+    
+    // 1. Ativa o efeito e o som
+    glitchOverlay.classList.remove('hidden');
+    glitchOverlay.classList.add('glitch-active');
+    
+    if (typeof audioErro !== 'undefined' && audioErro) { 
+        audioErro.currentTime = 0; 
+        audioErro.play().catch(e => console.log("Som de erro não pôde ser reproduzido."));
+    }
+    
+    // 2. Remove o efeito após a duração da animação (0.2s)
+    setTimeout(() => {
+        glitchOverlay.classList.remove('glitch-active');
+        glitchOverlay.classList.add('hidden');
+    }, 200); 
+}
+
+
 function displayQuestion() {
     if (currentQuestionIndex >= shuffledQuestions.length) {
         endGame(false); // Ganhou
@@ -345,8 +392,15 @@ function checkAnswer(selectedAnswer) {
         currentQuestionIndex++;
         displayQuestion();
     } else {
-        audioErro.play();
-        endGame(true); // Perdeu
+        // NOVO: Lógica de Vidas
+        triggerGlitchEffect(); 
+        lives--;              
+        updateLifeDisplay();  
+
+        if (lives <= 0) {
+            endGame(true); // Perdeu todas as vidas
+        } 
+        // Se lives > 0, o jogador permanece na questão atual (currentQuestionIndex não é incrementado).
     }
 }
 
@@ -365,7 +419,8 @@ async function endGame(lost = false) {
     restartButton.classList.add('hidden');
 
     if (lost) {
-        endGameMessageElement.textContent = `Você errou e perdeu!`;
+        // MENSAGEM ATUALIZADA PARA PERDA DE VIDAS
+        endGameMessageElement.textContent = `Você errou e perdeu o jogo! Vidas esgotadas.`;
     } else {
         endGameMessageElement.textContent = 'Parabéns, você completou o quiz!';
         audioVitoria.play();
