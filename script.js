@@ -208,12 +208,14 @@ const bgImages = [
     'background51.jpg', 'background52.jpg'
 ];
 
-// Configuração da Música de Fundo (audio/trilha.ogg)
+// Configuração dos Sons
 const audioFundo = new Audio('audio/trilha.ogg');
 audioFundo.loop = true;
 const audioAcerto = new Audio('audio/acerto.ogg');
 const audioErro = new Audio('audio/erro.ogg');
 const audioVitoria = new Audio('audio/campeao.ogg');
+// NOVO: Áudio para o início da contagem da foto
+const audioCaptura = new Audio('audio/captura.ogg'); 
 
 const keyboardMap = {
     '2': 'd',
@@ -464,6 +466,9 @@ async function endGame(lost = false) {
  * Gerencia o contador visual (5, 4, 3, 2, 1) e o flash.
  */
 function startPhotoCountdown(stream) {
+    // NOVO: Reproduz o áudio de captura ao iniciar o contador
+    audioCaptura.play().catch(e => console.log("Erro ao reproduzir áudio de captura."));
+    
     let photoTimer = 5;
     photoCountdownElement.classList.remove('hidden');
     photoCountdownElement.textContent = photoTimer;
