@@ -197,9 +197,9 @@ const quizData = [
         answer: "Linhares"
     },
     {
-        question: "A Reserva Biológica de Sooretama, uma das últimas áreas de Mata Atlântica preservadas, fica em parte no município de:",
-        options: ["Itarana", "Sooretama", "Ibiraçu", "Afonso Cláudio"],
-        answer: "Sooretama"
+        question: "Essa Reserva Biológica é uma das últimas áreas de Mata Atlântica preservadas do Espírito Santo. Ela é a ",
+        options: ["Reserva Biológica de Itarana", "Reserva Biológica de Sooretama", "Reserva Biológica de Ibiraçu", "Reserva Biológica de Afonso Cláudio"],
+        answer: "Reserva Biológica de Sooretama"
     },
     {
         question: "Qual município do ES possui a maior população pomerana do Brasil?",
