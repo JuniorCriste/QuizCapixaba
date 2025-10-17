@@ -1,6 +1,6 @@
 # 🎮 Quiz Capixaba
 Jogo de perguntas e respostas desenvolvido para demonstração no **Dia D da Tecnologia** da rede estadual de escolas do Espírito Santo.  
-O jogo consiste em **30 questões** sobre o Estado e sua cultura! Jogue com seus amigos, alunos e colegas de trabalho.  
+O jogo consiste em **60 questões** sobre o Estado e sua cultura! Jogue com seus amigos, alunos e colegas de trabalho.  
 
 
 
