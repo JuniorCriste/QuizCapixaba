@@ -299,7 +299,7 @@ const quizData = [
     {
         question: "Nascido em Cachoeiro de Itapemirim, o capixaba Rubem Braga ficou conhecido como um dos maiores",//
         options: ["Cronistas brasileiros", "Pagodeiros brasileiros", "Dançarinos de Forró brasileiros", "Jornalistas brasileiros"],
-        answer: "Casaca"
+        answer: "Cronistas brasileiros"
     }
 ];
 
