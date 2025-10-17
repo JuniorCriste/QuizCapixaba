@@ -338,9 +338,9 @@ function startGame() {
  */
 function updateLifeDisplay() {
     // Ordem: Vida 1 (azul), Vida 2 (branca), Vida 3 (rosa)
-    if (lifeIcons[0]) lifeIcons[0].style.opacity = lives >= 1 ? 1 : 0.3;
-    if (lifeIcons[1]) lifeIcons[1].style.opacity = lives >= 2 ? 1 : 0.3;
-    if (lifeIcons[2]) lifeIcons[2].style.opacity = lives >= 3 ? 1 : 0.3;
+    if (lifeIcons[0]) lifeIcons[0].style.opacity = lives >= 1 ? 1 : 0.2;
+    if (lifeIcons[1]) lifeIcons[1].style.opacity = lives >= 2 ? 1 : 0.2;
+    if (lifeIcons[2]) lifeIcons[2].style.opacity = lives >= 3 ? 1 : 0.2;
 }
 
 /**
