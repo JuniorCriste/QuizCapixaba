@@ -190,7 +190,12 @@ body {
     right: 20px;
     font-size: 1.5em;
     font-weight: bold;
-    color: #333;
+    color: white;
+    text-shadow:
+    1px 1px 0 #333,   /* Canto inferior-direito */
+    -1px -1px 0 #333, /* Canto superior-esquerdo */
+    1px -1px 0 #333,  /* Canto superior-direito */
+    -1px 1px 0 #333;  /* Canto inferior-direito */
 }
 
 /* ------------------------------------------- */
